@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">StudyBuddy</string>
+    <string name="emailHint">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_link_to_register">Click here to Register</string>
+    <string name="btn_login">Login</string>
+    <string name="SignUp">SignUp</string>
+    <string name="firstNameHint">First Name</string>
+    <string name="lastNameHint">Last Name</string>
+    <string name="hint_retype_password">Retype Password</string>
+    <string name="action_sign_in_short">Sign In</string>
+    <string name="minimum_password">Password too short, enter minimum 6 characters!</string>
+    <string name="auth_failed">Authentication failed, check your email and password or sign up</string>
+    <string name="location">Location</string>
+
+</resources>

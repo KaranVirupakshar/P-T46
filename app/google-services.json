@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "710853952864",
+    "project_id": "p-t46-3e7f2",
+    "storage_bucket": "p-t46-3e7f2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:710853952864:android:83a32d8a852e6767790a05",
+        "android_client_info": {
+          "package_name": "edu.neu.madcourse.studybuddy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "710853952864-3q1n94av2fnlg5r090p8bjcpi519s6op.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBCFt4gK09P-ew9qX7kOuH62GHhNNKu8PE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "710853952864-3q1n94av2fnlg5r090p8bjcpi519s6op.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
