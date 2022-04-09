@@ -3,11 +3,30 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable-anydpi/addfriend.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-anydpi/delete.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-anydpi/friendaccount.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-anydpi/friends.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-anydpi/home.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/drawable-anydpi/people.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-anydpi/personpin.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable-v24/backbutton.xml" value="0.26296296296296295" />
         <entry key="app/src/main/res/drawable-v24/bluebutton.xml" value="0.26296296296296295" />
+        <entry key="app/src/main/res/drawable/bluebutton.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/drawable/bottomborder.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/friend_item_border.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/friends_tab_background_unselected.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/drawable/friends_tab_layout_background.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/drawable/friends_tab_layout_background_selected.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/drawable/tab_layout_selector.xml" value="0.2140625" />
+        <entry key="app/src/main/res/layout/activity_event_invent.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.318450347703323" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.192481884057971" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.192481884057971" />
+        <entry key="app/src/main/res/layout/mainactivity_fragment_home.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/mainactivity_fragment_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/mainactivity_fragment_search_groups.xml" value="0.17255434782608695" />
+        <entry key="app/src/main/res/layout/mainactivity_fragment_tab1.xml" value="0.17255434782608695" />
       </map>
     </option>
   </component>

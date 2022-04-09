@@ -11,4 +11,12 @@
     <dimen name="margin16dp">16dp</dimen>
     <dimen name="margin30dp">30dp</dimen>
     <dimen name="margin3dp">3dp</dimen>
+    <dimen name="tabIndicationHeightSelected">5dp</dimen>
+    <dimen name="margin20dp">20dp</dimen>
+    <dimen name="userLogoWidth">100dp</dimen>
+    <dimen name="userLogoHeight">100dp</dimen>
+    <dimen name="maxWidthUsername">280dp</dimen>
+    <dimen name="maxHeightUsername">50dp</dimen>
+    <dimen name="tabIndicationHeight">0dp</dimen>
+    <dimen name="connectionTabLayoutWidth">350dp</dimen>
 </resources>

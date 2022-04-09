@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  android:orientation="vertical"
+  tools:context=".MainActivityHomeFragment"
+  >
+
+    <TextView
+        android:id="@+id/emptyRecyclerViewGroupHomeFeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/emptyViewGroupHomeFeed"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="gone"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addGroupButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorAccent"
+        android:text="@drawable/plus"
+        app:borderWidth="@dimen/margin3dp"
+        app:backgroundTint="@color/white"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/margin20dp"
+        android:layout_marginBottom="@dimen/margin20dp"
+        />
+
+
+</RelativeLayout>
