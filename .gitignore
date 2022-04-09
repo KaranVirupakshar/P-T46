@@ -13,3 +13,14 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+app/src/test/java/.DS_Store
+app/src/test/java/edu/.DS_Store
+app/src/test/java/edu/neu/.DS_Store
+app/src/test/java/edu/neu/madcourse/.DS_Store
+app/src/test/.DS_Store
+app/src/main/res/layout/.DS_Store
+app/src/main/res/.DS_Store
+app/src/main/.DS_Store
+app/src/.DS_Store
+app/.DS_Store
