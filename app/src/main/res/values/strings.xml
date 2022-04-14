@@ -17,5 +17,6 @@
     <string name="profileMainText">Profile</string>
     <string name="emptyGroupInviteList">No Groups Found!</string>
     <string name="plus">plus</string>
+    <string name="startTime">Start Time</string>
 
 </resources>
