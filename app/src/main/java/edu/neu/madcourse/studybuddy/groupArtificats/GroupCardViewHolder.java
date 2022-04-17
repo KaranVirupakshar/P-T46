@@ -1,4 +1,4 @@
-package edu.neu.madcourse.studybuddy;
+package edu.neu.madcourse.studybuddy.groupArtificats;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -6,6 +6,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import edu.neu.madcourse.studybuddy.R;
 
 public class GroupCardViewHolder extends RecyclerView.ViewHolder {
     public TextView title;

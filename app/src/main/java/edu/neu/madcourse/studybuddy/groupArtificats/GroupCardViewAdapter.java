@@ -1,4 +1,4 @@
-package edu.neu.madcourse.studybuddy;
+package edu.neu.madcourse.studybuddy.groupArtificats;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+
+import edu.neu.madcourse.studybuddy.R;
 
 
 /**
