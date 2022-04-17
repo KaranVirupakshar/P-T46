@@ -17,8 +17,6 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,6 +25,8 @@ import java.sql.Time;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
+
+import util.CustomSnackBar;
 
 public class MainActivityHomeFragment extends Fragment {
     private FloatingActionButton addGroupButton;
@@ -37,6 +37,7 @@ public class MainActivityHomeFragment extends Fragment {
     private EditText startHour, startMinute, endHour, endMinute;
     private CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     private FirebaseFirestore db;
+    CustomSnackBar snackBar;
 
     public MainActivityHomeFragment() {
 
@@ -62,7 +63,9 @@ public class MainActivityHomeFragment extends Fragment {
                 container, false);
 
         addGroupButton = view.findViewById(R.id.addGroup);
+        snackBar = new CustomSnackBar();
 
+        // Floating button listener
         addGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -74,6 +77,7 @@ public class MainActivityHomeFragment extends Fragment {
     }
 
     public void enablePopUp(View view) {
+        // Fetching all the required information for group creation
         newGroupDialog = new AlertDialog.Builder(view.getContext());
         final View popUp = getLayoutInflater().inflate(R.layout.grouppopup, null);
         title = (EditText) popUp.findViewById(R.id.title);
@@ -103,18 +107,13 @@ public class MainActivityHomeFragment extends Fragment {
         Window window = alertDialog.getWindow();
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
+        // SAVE button listener
         newGroup_Add.setOnClickListener(new View.OnClickListener() {
+            Time startTime;
+            Time endTime;
             @Override
             public void onClick(View view) {
-                int startHourInteger = Integer.valueOf(startHour.getText().toString());
-                int startTimeInteger = Integer.valueOf(startMinute.getText().toString());
-
-                int endHourInteger = Integer.valueOf(endHour.getText().toString());
-                int endTimeInteger = Integer.valueOf(endMinute.getText().toString());
-                // save new group to firebase and close pop up
-                Time startTime = new Time(startHourInteger, startTimeInteger, 0);
-                Time endTime = new Time(endHourInteger, endTimeInteger, 0);
-
+                // Days list is created based on how many days are checked
                 List<DayOfWeek> days = new ArrayList<>();
 
                 if (monday.isChecked()) {
@@ -144,6 +143,74 @@ public class MainActivityHomeFragment extends Fragment {
                 if (sunday.isChecked()) {
                     days.add(DayOfWeek.SUNDAY);
                 }
+
+
+                // Validity of each field is checked
+                if (title.getText().length() == 0) {
+                    snackBar
+                            .display(view, getContext(), "Please enter title of the group", R.color.lightBlue);
+                    return;
+                }
+                else if (subject.getText().length() == 0) {
+                    snackBar
+                            .display(view, getContext(), "Please enter subject of the group", R.color.lightBlue);
+                    return;
+                }
+                else if (location.getText().length() == 0){
+                    snackBar
+                            .display(view, getContext(), "Please enter the zipcode", R.color.lightBlue);
+                    return;
+                }
+
+                try {
+                    Integer.valueOf(location.getText().toString());
+                    if (location.getText().length() != 5) {
+                        snackBar
+                                .display(view, getContext(), "Please enter a valid zipcode", R.color.lightBlue);
+                        return;
+                    }
+                }
+                catch (Exception e) {
+                    snackBar
+                            .display(view, getContext(), "Please enter a valid zipcode", R.color.lightBlue);
+                    return;
+                }
+
+
+                if (description.getText().length() == 0) {
+                    snackBar
+                            .display(view, getContext(), "Please enter description of the group", R.color.lightBlue);
+                    return;
+                }
+                else if (days.size() == 0) {
+                    snackBar
+                            .display(view, getContext(), "Please select atleast one day", R.color.lightBlue);
+                    return;
+                }
+
+                try {
+                    int startHourInteger = Integer.valueOf(startHour.getText().toString());
+                    int startTimeInteger = Integer.valueOf(startMinute.getText().toString());
+
+                    int endHourInteger = Integer.valueOf(endHour.getText().toString());
+                    int endTimeInteger = Integer.valueOf(endMinute.getText().toString());
+
+                    // Check if end time is grater than start time
+                    startTime = new Time(startHourInteger, startTimeInteger, 0);
+                    endTime = new Time(endHourInteger, endTimeInteger, 0);
+
+                    if (startTime.compareTo(endTime) == 1) {
+                        snackBar
+                                .display(view, getContext(), "Please enter end time grater than start time", R.color.lightBlue);
+                        return;
+                    }
+                }
+                catch (Exception e) {
+                    snackBar
+                            .display(view, getContext(), "Please enter valid timings", R.color.lightBlue);
+                    return;
+                }
+
 
                 CollectionReference dbStudyGroup = db.collection("studyGroups");
 
