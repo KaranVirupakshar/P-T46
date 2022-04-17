@@ -8,37 +8,46 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="83dp"
+        android:layout_height="79dp"
         android:layout_margin="5dp">
 
         <TextView
-            android:id="@+id/item_name"
+            android:id="@+id/group_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="57dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="130dp"
             android:layout_marginTop="7dp"
-            android:layout_toEndOf="@+id/item_icon"
-            android:text="Title"
+            android:layout_marginEnd="214dp"
+            android:text="@string/cardTitle"
             android:textColor="@android:color/black"
             android:textSize="15sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/item_desc"
-            android:layout_width="wrap_content"
+            android:id="@+id/group_datetime"
+            android:layout_width="85dp"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/item_name"
-            android:layout_marginStart="57dp"
-            android:layout_marginTop="4dp"
-            android:layout_toEndOf="@+id/item_icon"
-            android:text="@string/item_description" />
+            android:layout_below="@+id/group_title"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="112dp"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="201dp"
+            android:text="@string/cardDate" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/group_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/item_desc"
-            android:text="Location" />
+            android:layout_below="@id/group_datetime"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="118dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="202dp"
+            android:text="@string/cardLocation" />
 
     </RelativeLayout>
 

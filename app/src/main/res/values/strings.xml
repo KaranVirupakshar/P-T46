@@ -17,4 +17,7 @@
     <string name="profileMainText">Profile</string>
     <string name="emptyGroupInviteList">No Groups Found!</string>
 
+    <string name = "cardTitle">Title</string>
+    <string name = "cardDate">Date/Time</string>
+    <string name = "cardLocation">Location</string>
 </resources>
