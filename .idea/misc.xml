@@ -3,13 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/MAD project/P-T46/app/src/main/res/layout/activity_login.xml" value="0.5493659420289855" />
-        <entry key="..\:/MAD project/P-T46/app/src/main/res/layout/activity_main.xml" value="0.5493659420289855" />
-        <entry key="..\:/MAD project/P-T46/app/src/main/res/layout/activity_register.xml" value="0.5493659420289855" />
-        <entry key="..\:/MAD project/P-T46/app/src/main/res/layout/group_card.xml" value="0.25" />
-        <entry key="..\:/MAD project/P-T46/app/src/main/res/layout/mainactivity_fragment_find_groups.xml" value="0.5493659420289855" />
-        <entry key="..\:/MAD project/P-T46/app/src/main/res/layout/mainactivity_fragment_home.xml" value="0.5493659420289855" />
-        <entry key="..\:/MAD project/P-T46/app/src/main/res/layout/mainactivity_fragment_profile.xml" value="0.5493659420289855" />
+        <entry key="..\:/NEU/Mobile/Project/P-T46/app/src/main/res/layout/activity_main.xml" value="0.10989583333333333" />
+        <entry key="..\:/NEU/Mobile/Project/P-T46/app/src/main/res/layout/activity_register.xml" value="0.25" />
+        <entry key="..\:/NEU/Mobile/Project/P-T46/app/src/main/res/layout/fragment_blank.xml" value="0.25" />
+        <entry key="..\:/NEU/Mobile/Project/P-T46/app/src/main/res/layout/grouppopup.xml" value="0.2" />
+        <entry key="..\:/NEU/Mobile/Project/P-T46/app/src/main/res/layout/mainactivity_fragment_find_groups.xml" value="0.10989583333333333" />
+        <entry key="..\:/NEU/Mobile/Project/P-T46/app/src/main/res/layout/mainactivity_fragment_home.xml" value="0.1" />
+        <entry key="..\:/NEU/Mobile/Project/P-T46/app/src/main/res/layout/mainactivity_fragment_profile.xml" value="0.10989583333333333" />
         <entry key="app/src/main/res/drawable-anydpi/addfriend.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable-anydpi/delete.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable-anydpi/friendaccount.xml" value="0.2140625" />
