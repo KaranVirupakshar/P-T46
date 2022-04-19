@@ -24,6 +24,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import util.CustomSnackBar;
@@ -220,8 +221,8 @@ public class MainActivityHomeFragment extends Fragment {
                         location.getText().toString(),
                         description.getText().toString(),
                         days,
-                        startTime,
-                        endTime
+                        new Date(startTime.getTime()),
+                        new Date(endTime.getTime())
                         );
 
                 dbStudyGroup.add(group).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {

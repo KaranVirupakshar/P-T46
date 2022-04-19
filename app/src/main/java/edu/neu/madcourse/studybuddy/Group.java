@@ -1,7 +1,11 @@
 package edu.neu.madcourse.studybuddy;
 
+import com.google.type.DateTime;
+
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
+import java.util.Date;
 import java.util.List;
 
 public class Group {
@@ -10,8 +14,8 @@ public class Group {
     String location;
     String description;
     List<DayOfWeek> days;
-    Time startTime;
-    Time endTime;
+    Date startTime;
+    Date endTime;
 
     public String getTitle() {
         return title;
@@ -33,17 +37,21 @@ public class Group {
         return days;
     }
 
-    public Time getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public Time getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
+    public Group () {
+
+    }
+
     public Group(String title, String subject, String location,
-                 String description, List<DayOfWeek> days, Time startTime,
-                 Time endTime) {
+                 String description, List<DayOfWeek> days, Date startTime,
+                 Date endTime) {
         this.title = title;
         this.subject = subject;
         this.location = location;
