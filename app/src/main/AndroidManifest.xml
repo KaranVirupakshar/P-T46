@@ -32,6 +32,7 @@
             android:screenOrientation="portrait"
             >
         </activity>
+        <activity android:name=".HomeScreen"></activity>
     </application>
 
 </manifest>

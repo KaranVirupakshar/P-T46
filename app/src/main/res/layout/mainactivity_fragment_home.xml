@@ -9,15 +9,14 @@
   >
 
     <TextView
-        android:id="@+id/emptyRecyclerViewGroupHomeFeed"
+        android:id="@+id/homePageRecyclerView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:text="@string/emptyViewGroupHomeFeed"
         android:textColor="@color/black"
         android:textSize="20sp"
-        android:visibility="gone"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"/>
+        android:visibility="invisible" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addGroup"

@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,10 +27,23 @@ import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.neu.madcourse.studybuddy.groupArtificats.GroupCard;
+import edu.neu.madcourse.studybuddy.groupArtificats.GroupCardViewAdapter;
+import edu.neu.madcourse.studybuddy.models.Group;
 import util.CustomSnackBar;
 
 public class MainActivityHomeFragment extends Fragment {
     private FloatingActionButton addGroupButton;
+    //The Recycler view stuff is defined here
+    private List<GroupCard> groupCards;
+
+    private RecyclerView recyclerView;
+    private GroupCardViewAdapter recyclerViewAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+
+    private static final String KEY_OF_INSTANCE = "KEY_OF_INSTANCE";
+    private static final String NUMBER_OF_ITEMS = "NUMBER_OF_ITEMS";
+    /*************************************************/
     private EditText title, description, subject, location;
     private Button newGroup_cancel, newGroup_Add;
     private AlertDialog.Builder newGroupDialog;
@@ -63,6 +77,7 @@ public class MainActivityHomeFragment extends Fragment {
                 container, false);
 
         addGroupButton = view.findViewById(R.id.addGroup);
+        recyclerView = view.findViewById(R.id.homePageRecyclerView);
         snackBar = new CustomSnackBar();
 
         // Floating button listener
