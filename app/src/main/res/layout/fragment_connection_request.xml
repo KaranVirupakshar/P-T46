@@ -56,6 +56,32 @@
         android:textSize="12sp"
         />
 
-    
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="70dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/pendingConnectionFullName"
+        android:layout_alignStart="@id/pendingConnectionFullName"
+        android:layout_marginTop="@dimen/margin10dp"
+        android:layout_toRightOf="@id/pendingConnectionRequestContainer"
+        android:text="Accept"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/rejectButton"
+        android:layout_width="70dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/pendingConnectionFullName"
+        android:layout_alignStart="@id/pendingConnectionFullName"
+        android:layout_marginStart="81dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/pendingConnectionRequestContainer"
+        android:text="Reject"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="10dp" />
 
 </RelativeLayout>
