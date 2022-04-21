@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <FrameLayout
+        android:id="@+id/pendingConnectionRequestContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp">
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/userbox"
+            />
+
+        <TextView
+            android:id="@+id/pendingConnectionLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:text="JD"
+            android:textColor="@color/colorAccent"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/pendingConnectionFullName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="John Doe"
+        android:layout_toRightOf="@+id/pendingConnectionRequestContainer"
+        android:layout_marginLeft="@dimen/margin20dp"
+        android:layout_marginBottom="@dimen/margin10dp"
+        android:textColor="@color/black"
+        android:autoSizeTextType="uniform"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/pendingConnectionNameRequest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin25dp"
+        android:layout_alignTop="@id/pendingConnectionFullName"
+        android:layout_alignLeft="@id/pendingConnectionFullName"
+        android:layout_toRightOf="@+id/pendingConnectionRequestContainer"
+        android:layout_alignStart="@+id/pendingConnectionFullName"
+        android:text="johndoe"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        />
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="70dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/pendingConnectionFullName"
+        android:layout_alignStart="@id/pendingConnectionFullName"
+        android:layout_marginTop="@dimen/margin10dp"
+        android:layout_toRightOf="@id/pendingConnectionRequestContainer"
+        android:text="Accept"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="10dp" />
+
+    <Button
+        android:id="@+id/rejectButton"
+        android:layout_width="70dp"
+        android:layout_height="36dp"
+        android:layout_below="@+id/pendingConnectionFullName"
+        android:layout_alignStart="@id/pendingConnectionFullName"
+        android:layout_marginStart="81dp"
+        android:layout_marginLeft="101dp"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@id/pendingConnectionRequestContainer"
+        android:text="Reject"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="10dp" />
+
+</RelativeLayout>
