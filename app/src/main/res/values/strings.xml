@@ -18,5 +18,8 @@
     <string name="emptyGroupInviteList">No Groups Found!</string>
     <string name="plus">plus</string>
     <string name="startTime">Start Time</string>
+    <string name="emptyViewConnectionRequests">No Connection Requests!</string>
+    <string name="emptyViewMyConnections">No Connections!</string>
+
 
 </resources>
