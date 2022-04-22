@@ -16,12 +16,16 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
@@ -38,6 +42,7 @@ public class MainActivityHomeFragment extends Fragment {
 
     //The Recycler view stuff is defined here
     /************************************************/
+
     private List<GroupCard> groupCards;
 
     private RecyclerView recyclerView;
@@ -70,7 +75,7 @@ public class MainActivityHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-
+        this.init();
     }
 
     @Override
@@ -100,6 +105,36 @@ public class MainActivityHomeFragment extends Fragment {
      */
     void init(){
         CollectionReference collectionReference = db.collection("studyGroups");
+        processCollectionData(collectionReference);
+
+    }
+
+
+    /**
+     * Process collection data and convert to a group object here which are later used as cards
+     */
+    void processCollectionData(CollectionReference collectionReference){
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot document : task.getResult()){
+                        String title = document.getString("title");
+                        String subject = document.getString("subject");
+                        String location = document.getString("location");
+
+                        GroupCard groupCard = new GroupCard(title,subject,location);
+                        groupCards.add(groupCard);
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * A method to create a recycler view
+     */
+    void createRecyclerView(){
 
     }
 

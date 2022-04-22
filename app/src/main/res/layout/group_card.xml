@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="2dp"
@@ -27,7 +28,7 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/group_datetime"
+            android:id="@+id/group_subject"
             android:layout_width="85dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/group_title"
@@ -36,14 +37,14 @@
             android:layout_marginStart="141dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="172dp"
-            android:text="@string/cardDate"
+            android:text="@string/cardSubject"
             android:textAlignment="center" />
 
         <TextView
             android:id="@+id/group_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/group_datetime"
+            android:layout_below="@id/group_subject"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="145dp"
@@ -53,7 +54,7 @@
             android:textAlignment="center" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/groupCardButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/group_location"
@@ -63,7 +64,9 @@
             android:layout_marginTop="1dp"
             android:layout_marginEnd="171dp"
             android:text="@string/buttonTextJoin"
-            app:cornerRadius="18dp" />
+            android:textColor="#311B92"
+            app:cornerRadius="18dp"
+            tools:ignore="TextContrastCheck" />
 
     </RelativeLayout>
 

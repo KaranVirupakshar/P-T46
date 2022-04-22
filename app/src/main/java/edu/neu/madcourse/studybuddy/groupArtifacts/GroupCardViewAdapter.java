@@ -37,7 +37,7 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
         GroupCard currentItem = groupCards.get(position);
 
         holder.title.setText(currentItem.title);
-        holder.dateTime.setText(currentItem.date);
+        holder.subject.setText(currentItem.subject);
         holder.location.setText(currentItem.location);
     }
 

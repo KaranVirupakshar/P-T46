@@ -20,7 +20,7 @@
     <string name="startTime">Start Time</string>
 
     <string name = "cardTitle">Title</string>
-    <string name = "cardDate">Date/Time</string>
+    <string name = "cardSubject">Subject</string>
     <string name = "cardLocation">Location</string>
     <string name = "guestLogin">Try as guest</string>
 

@@ -9,12 +9,12 @@ import android.widget.AdapterView;
 public class GroupCard implements AdapterView.OnItemClickListener {
 
     String title;
-    String date;
+    String subject;
     String location;
 
     public GroupCard(String title, String date, String location) {
         this.title = title;
-        this.date = date;
+        this.subject = date;
         this.location = location;
     }
 
@@ -22,8 +22,8 @@ public class GroupCard implements AdapterView.OnItemClickListener {
         return title;
     }
 
-    public String getDate() {
-        return date;
+    public String getSubject() {
+        return subject;
     }
 
     public String getLocation() {
