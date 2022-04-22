@@ -23,4 +23,7 @@
     <string name = "cardDate">Date/Time</string>
     <string name = "cardLocation">Location</string>
     <string name = "guestLogin">Try as guest</string>
+
+    <string name="buttonTextJoin">Join</string>
+    <string name="buttonTextJoined">Joined</string>
 </resources>
