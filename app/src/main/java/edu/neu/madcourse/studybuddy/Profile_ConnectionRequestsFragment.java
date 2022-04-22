@@ -152,7 +152,13 @@ public class Profile_ConnectionRequestsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_connection_request_list, container, false);
-
+        this.myConnectionRequestsRecyclerView = view.findViewById(R.id.recyclerViewMyConnectionRequests);
+        this.emptyRecyclerViewConnectionRequests = view.findViewById(R.id.emptyRecyclerViewMyConnectionRequests);
+        this.myConnectionRequestsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        this.setUpListenerAdapter();
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this.myConnectionRequestsRecyclerView.getContext(),
+                DividerItemDecoration.VERTICAL);
+        this.myConnectionRequestsRecyclerView.addItemDecoration(dividerItemDecoration);
         return view;
     }
 
@@ -167,6 +173,27 @@ public class Profile_ConnectionRequestsFragment extends Fragment {
                 if(e != null) {
                     return;
                 }
+                if(mapUsernameToFullName.exists() && mapUsernameToFullName != null) {
+
+                    Set<String> setOfConnectionUsernames = mapUsernameToFullName.getData().keySet();
+                    if (setOfConnectionUsernames.size() == 0) {
+                        pendingConnectionRequests.clear();
+                    }
+
+                    else {
+                        for (int i = 0; i < pendingConnectionRequests.size(); i++) {
+                            if (setOfConnectionUsernames.contains(pendingConnectionRequests.get(i).getUserName())) {
+                                setOfConnectionUsernames.remove(pendingConnectionRequests.get(i).getUserName());
+                            }
+                        }
+                        for (String usernameToAdd : setOfConnectionUsernames) {
+                            pendingConnectionRequests.add(
+                                    new Connection(usernameToAdd, mapUsernameToFullName.get(usernameToAdd).toString()));
+                        }
+                    }
+
+
+                }
             }
         });
 
@@ -175,12 +202,18 @@ public class Profile_ConnectionRequestsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-
+        if (context instanceof OnListFragmentInteractionListener) {
+            mListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        mListener = null;
     }
 
     public interface OnListFragmentInteractionListener {
