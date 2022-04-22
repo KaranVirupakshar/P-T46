@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -21,6 +22,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -59,10 +62,13 @@ public class MainActivityHomeFragment extends Fragment {
     private EditText startHour, startMinute, endHour, endMinute;
     private CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     private FirebaseFirestore db;
+    private FirebaseAuth firebaseAuth;
+
+    private View view;
     CustomSnackBar snackBar;
 
     public MainActivityHomeFragment() {
-
+        firebaseAuth = FirebaseAuth.getInstance();
     }
 
     public static  MainActivityHomeFragment newInstance(String param1, String param2) {
@@ -81,7 +87,7 @@ public class MainActivityHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.mainactivity_fragment_home,
+        view = inflater.inflate(R.layout.mainactivity_fragment_home,
                 container, false);
 
         addGroupButton = view.findViewById(R.id.addGroup);
@@ -93,7 +99,13 @@ public class MainActivityHomeFragment extends Fragment {
         addGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enablePopUp(view);
+
+                if(FirebaseAuth.getInstance().getCurrentUser() == null){
+                       snackBar.display(view,getContext(),"You need to register before you can join a group");
+                }
+                else {
+                    enablePopUp(view);
+                }
             }
         });
         db = FirebaseFirestore.getInstance();
@@ -106,14 +118,22 @@ public class MainActivityHomeFragment extends Fragment {
     void init(){
         CollectionReference collectionReference = db.collection("studyGroups");
         processCollectionData(collectionReference);
-
+        createRecyclerView();
     }
 
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
 
     /**
      * Process collection data and convert to a group object here which are later used as cards
      */
     void processCollectionData(CollectionReference collectionReference){
+
+        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
+
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -122,9 +142,14 @@ public class MainActivityHomeFragment extends Fragment {
                         String title = document.getString("title");
                         String subject = document.getString("subject");
                         String location = document.getString("location");
-
                         GroupCard groupCard = new GroupCard(title,subject,location);
-                        groupCards.add(groupCard);
+                        // Only add to the list if the user is logged in
+                        if(user != null){
+                            //TODO : Add logic for user and fetch user joined groups
+                        }
+                        else{
+                            groupCards.add(groupCard);
+                        }
                     }
                 }
             }
@@ -132,10 +157,19 @@ public class MainActivityHomeFragment extends Fragment {
     }
 
     /**
-     * A method to create a recycler view
+     * A method to create a recycler view.
      */
     void createRecyclerView(){
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setHasFixedSize(true);
+        //Pass groupcards to the adapter
+        recyclerViewAdapter = new GroupCardViewAdapter(groupCards);
 
+
+        //TODO : Fetch groupId so that user can join them when one accesses it
+
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     public void enablePopUp(View view) {
