@@ -95,6 +95,14 @@ public class MainActivityHomeFragment extends Fragment {
         return view;
     }
 
+    /**
+     * A method that fetches the groups from the firestore DB and populates the recycler view in the home page.
+     */
+    void init(){
+        CollectionReference collectionReference = db.collection("studyGroups");
+
+    }
+
     public void enablePopUp(View view) {
         // Fetching all the required information for group creation
         newGroupDialog = new AlertDialog.Builder(view.getContext());
