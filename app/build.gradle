@@ -1,19 +1,20 @@
 
 plugins {
     id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('C:\\NEU\\Mobile\\Project\\projectKey.jks')
-            storePassword 'Team@46'
-            keyAlias 'projectKey'
-            keyPassword 'Team@46'
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile file('C:\\NEU\\Mobile\\Project\\projectKey.jks')
+//            storePassword 'Team@46'
+//            keyAlias 'projectKey'
+//            keyPassword 'Team@46'
+//        }
+//    }
     compileSdk 32
 
     defaultConfig {
@@ -30,7 +31,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
         }
     }
     compileOptions {
@@ -45,6 +46,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     implementation platform('com.google.firebase:firebase-bom:29.3.0')
     implementation 'com.google.firebase:firebase-database:20.0.4'
@@ -54,5 +56,6 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.adevinta.android:leku:9.1.4'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,20 +1,21 @@
-package edu.neu.madcourse.studybuddy.models;
+package edu.neu.madcourse.studybuddy;
+
+import com.google.type.DateTime;
 
 import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.DayOfWeek;
+import java.util.Date;
 import java.util.List;
 
-/**
- * A model class that represents a group.
- */
 public class Group {
     String title;
     String subject;
     String location;
     String description;
     List<DayOfWeek> days;
-    Time startTime;
-    Time endTime;
+    Date startTime;
+    Date endTime;
 
     public String getTitle() {
         return title;
@@ -36,27 +37,21 @@ public class Group {
         return days;
     }
 
-    public Time getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
 
-    public Time getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    /**
-     * A constructor for the group.
-     * @param title The title of the group.
-     * @param subject The subject which the group discusses.
-     * @param location The location where the group meets.
-     * @param description The description of the group.
-     * @param days The days when the groups meet.
-     * @param startTime The start time when the group meets.
-     * @param endTime The end time of the group meeting.
-     */
+    public Group () {
+
+    }
+
     public Group(String title, String subject, String location,
-                 String description, List<DayOfWeek> days, Time startTime,
-                 Time endTime) {
+                 String description, List<DayOfWeek> days, Date startTime,
+                 Date endTime) {
         this.title = title;
         this.subject = subject;
         this.location = location;
