@@ -26,4 +26,6 @@
 
     <string name="buttonTextJoin">Join</string>
     <string name="buttonTextJoined">Joined</string>
+
+    <string name="emptyViewConnectionRequests">No Connections</string>
 </resources>

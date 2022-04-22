@@ -32,7 +32,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
+import edu.neu.madcourse.studybuddy.Group;
 import util.CustomSnackBar;
 
 public class MainActivityFindGroupFragment extends Fragment {
@@ -200,7 +200,7 @@ public class MainActivityFindGroupFragment extends Fragment {
                 if (task.isSuccessful()) {
                     groups = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        groups.add(document.toObject(Group.class));
+                        groups.add(document.toObject(edu.neu.madcourse.studybuddy.Group.class));
                     }
                     if (groups.size() == 0){
                         snackBar

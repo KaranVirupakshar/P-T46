@@ -1,4 +1,4 @@
-package edu.neu.madcourse.studybuddy.groupArtificats;
+package edu.neu.madcourse.studybuddy.groupArtifacts;
 
 import android.view.View;
 import android.widget.AdapterView;

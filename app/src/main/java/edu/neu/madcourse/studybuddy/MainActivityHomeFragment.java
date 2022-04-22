@@ -9,6 +9,7 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,20 +29,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import edu.neu.madcourse.studybuddy.groupArtificats.GroupCard;
-import edu.neu.madcourse.studybuddy.groupArtificats.GroupCardViewAdapter;
-import edu.neu.madcourse.studybuddy.models.Group;
+import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
+import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
 import util.CustomSnackBar;
 
 public class MainActivityHomeFragment extends Fragment {
     private FloatingActionButton addGroupButton;
+
     //The Recycler view stuff is defined here
+    /************************************************/
     private List<GroupCard> groupCards;
 
     private RecyclerView recyclerView;
     private GroupCardViewAdapter recyclerViewAdapter;
     private RecyclerView.LayoutManager layoutManager;
-
+    private TextView recyclerTextView;
     private static final String KEY_OF_INSTANCE = "KEY_OF_INSTANCE";
     private static final String NUMBER_OF_ITEMS = "NUMBER_OF_ITEMS";
     /*************************************************/
@@ -79,6 +81,7 @@ public class MainActivityHomeFragment extends Fragment {
 
         addGroupButton = view.findViewById(R.id.addGroup);
         recyclerView = view.findViewById(R.id.homePageRecyclerView);
+        recyclerTextView = view.findViewById(R.id.homePageRecyclerViewText);
         snackBar = new CustomSnackBar();
 
         // Floating button listener
@@ -230,7 +233,7 @@ public class MainActivityHomeFragment extends Fragment {
 
                 CollectionReference dbStudyGroup = db.collection("studyGroups");
 
-                Group group = new Group(
+                edu.neu.madcourse.studybuddy.Group group = new edu.neu.madcourse.studybuddy.Group(
                         title.getText().toString(),
                         subject.getText().toString(),
                         location.getText().toString(),

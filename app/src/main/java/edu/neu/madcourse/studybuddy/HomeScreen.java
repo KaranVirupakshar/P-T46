@@ -6,12 +6,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.List;
 
-import edu.neu.madcourse.studybuddy.groupArtificats.GroupCard;
-import edu.neu.madcourse.studybuddy.groupArtificats.GroupCardViewAdapter;
+import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
+import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
 
 /**
  * A class that represents the home screen for the application.
