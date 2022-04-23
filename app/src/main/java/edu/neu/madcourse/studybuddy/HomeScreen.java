@@ -12,23 +12,8 @@ import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
 
 /**
- * A class that represents the home screen for the application.
+ * A class that represents the home screen for the application. This activity is only called for the guest user to browse through the pages.
  */
 public class HomeScreen extends AppCompatActivity {
-    private List<GroupCard> groupCards;
 
-    private RecyclerView recyclerView;
-    private GroupCardViewAdapter recyclerViewAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-    private static final String KEY_OF_INSTANCE = "KEY_OF_INSTANCE";
-    private static final String NUMBER_OF_ITEMS = "NUMBER_OF_ITEMS";
-
-
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(R.layout.mainactivity_fragment_home);
-    }
 }

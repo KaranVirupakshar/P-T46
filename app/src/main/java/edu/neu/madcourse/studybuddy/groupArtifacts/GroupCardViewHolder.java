@@ -8,6 +8,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.FirebaseDatabase;
+
 import edu.neu.madcourse.studybuddy.R;
 
 public class GroupCardViewHolder extends RecyclerView.ViewHolder {
@@ -15,6 +17,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
     public TextView subject;
     public TextView location;
     public Button cardButton;
+    private FirebaseDatabase firebaseDatabase;
 
     public GroupCardViewHolder(@NonNull View itemView, final AdapterView.OnItemClickListener onItemClickListener) {
         super(itemView);

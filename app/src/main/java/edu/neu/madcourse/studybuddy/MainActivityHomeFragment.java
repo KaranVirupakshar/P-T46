@@ -81,7 +81,7 @@ public class MainActivityHomeFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstance) {
         super.onCreate(savedInstance);
-        this.init();
+
     }
 
     @Override
@@ -109,6 +109,8 @@ public class MainActivityHomeFragment extends Fragment {
             }
         });
         db = FirebaseFirestore.getInstance();
+        //Get the initial data from the firestore db
+        this.init();
         return view;
     }
 
@@ -145,7 +147,8 @@ public class MainActivityHomeFragment extends Fragment {
                         GroupCard groupCard = new GroupCard(title,subject,location);
                         // Only add to the list if the user is logged in
                         if(user != null){
-                            //TODO : Add logic for user and fetch user joined groups
+                            //TODO : Add logic for user and fetch user joined groups. Also add the group Id to the card for this as a user needs to join one.
+                            groupCards.add(groupCard);
                         }
                         else{
                             groupCards.add(groupCard);
