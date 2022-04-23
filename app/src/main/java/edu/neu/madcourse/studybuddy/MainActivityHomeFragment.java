@@ -174,7 +174,7 @@ public class MainActivityHomeFragment extends Fragment {
      */
     void createRecyclerView(){
         System.out.println("The groupcards here are hopefully not lost");
-        System.out.println(this.groupCards);
+        System.out.println(this.groupCards.toString());
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView = view.findViewById(R.id.homePageRecyclerView);
         recyclerView.setHasFixedSize(true);

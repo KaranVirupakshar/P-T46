@@ -23,7 +23,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
         super(itemView);
         title = itemView.findViewById(R.id.group_title);
         subject = itemView.findViewById(R.id.group_subject);
-        location = itemView.findViewById(R.id.location);
+        location = itemView.findViewById(R.id.group_location);
         cardButton = itemView.findViewById(R.id.groupCardButton);
 
         //Make db calls for the user to join the group
