@@ -9,17 +9,33 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import org.checkerframework.checker.units.qual.A;
 
 import java.sql.Time;
 import java.time.DayOfWeek;
@@ -27,10 +43,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
+import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
 import util.CustomSnackBar;
 
 public class MainActivityHomeFragment extends Fragment {
     private FloatingActionButton addGroupButton;
+
+    //The Recycler view stuff is defined here
+    /************************************************/
+
+    private List<GroupCard> groupCards;
+    private RecyclerView recyclerView;
+    private GroupCardViewAdapter recyclerViewAdapter;
+    private RecyclerView.LayoutManager layoutManager;
+    private TextView recyclerTextView;
+    private static final String KEY_OF_INSTANCE = "KEY_OF_INSTANCE";
+    private static final String NUMBER_OF_ITEMS = "NUMBER_OF_ITEMS";
+    /*************************************************/
     private EditText title, description, subject, location;
     private Button newGroup_cancel, newGroup_Add;
     private AlertDialog.Builder newGroupDialog;
@@ -38,10 +68,14 @@ public class MainActivityHomeFragment extends Fragment {
     private EditText startHour, startMinute, endHour, endMinute;
     private CheckBox monday, tuesday, wednesday, thursday, friday, saturday, sunday;
     private FirebaseFirestore db;
+    private FirebaseAuth firebaseAuth;
+
+    private View view;
     CustomSnackBar snackBar;
 
     public MainActivityHomeFragment() {
-
+        firebaseAuth = FirebaseAuth.getInstance();
+        this.groupCards = new ArrayList<>();
     }
 
     public static  MainActivityHomeFragment newInstance(String param1, String param2) {
@@ -60,21 +94,98 @@ public class MainActivityHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.mainactivity_fragment_home,
+        view = inflater.inflate(R.layout.mainactivity_fragment_home,
                 container, false);
 
         addGroupButton = view.findViewById(R.id.addGroup);
+        recyclerTextView = view.findViewById(R.id.homePageRecyclerViewText);
         snackBar = new CustomSnackBar();
 
         // Floating button listener
         addGroupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enablePopUp(view);
+
+                if(FirebaseAuth.getInstance().getCurrentUser() == null){
+                       snackBar.display(view,getContext(),"You need to register before you can join a group");
+                }
+                else {
+                    enablePopUp(view);
+                }
             }
         });
         db = FirebaseFirestore.getInstance();
+        //Get the initial data from the firestore db
+        this.init();
         return view;
+    }
+
+    /**
+     * A method that fetches the groups from the firestore DB and populates the recycler view in the home page.
+     */
+    void init(){
+        CollectionReference collectionReference = db.collection("studyGroups");
+        processCollectionData(collectionReference);
+    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    /**
+     * Process collection data and convert to a group object here which are later used as cards
+     */
+    void processCollectionData(CollectionReference collectionReference){
+
+        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
+
+        //TODO : Add logic
+        collectionReference.get().addOnCompleteListener(task -> {
+            if(task.isSuccessful()){
+                System.out.println("We are getting the data!!!");
+                List<edu.neu.madcourse.studybuddy.Group> groups = new ArrayList<>();
+                for(QueryDocumentSnapshot document : task.getResult()){
+                    System.out.println("Inside here " + document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                    groups.add(document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                }
+                addGroupToCards(groups);
+            }
+        });
+    }
+
+    /**
+     * Use the fetched groups to form the card here
+     */
+    void addGroupToCards(List<edu.neu.madcourse.studybuddy.Group> groups){
+        System.out.println("This is called!!");
+        System.out.println(groups);
+        for(edu.neu.madcourse.studybuddy.Group group : groups){
+            GroupCard groupCard = new GroupCard(group.title,group.subject, group.location);
+            groupCards.add(groupCard);
+        }
+
+        createRecyclerView();
+    }
+
+    /**
+     * A method to create a recycler view.
+     */
+    void createRecyclerView(){
+        System.out.println("The groupcards here are hopefully not lost");
+        System.out.println(this.groupCards.toString());
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView = view.findViewById(R.id.homePageRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        //Pass groupcards to the adapter
+        recyclerViewAdapter = new GroupCardViewAdapter(groupCards);
+
+
+        //TODO : Fetch groupId so that user can join them when one accesses it
+
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     public void enablePopUp(View view) {
@@ -215,7 +326,7 @@ public class MainActivityHomeFragment extends Fragment {
 
                 CollectionReference dbStudyGroup = db.collection("studyGroups");
 
-                Group group = new Group(
+                edu.neu.madcourse.studybuddy.Group group = new edu.neu.madcourse.studybuddy.Group(
                         title.getText().toString(),
                         subject.getText().toString(),
                         location.getText().toString(),

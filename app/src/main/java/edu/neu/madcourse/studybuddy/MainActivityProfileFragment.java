@@ -1,5 +1,8 @@
 package edu.neu.madcourse.studybuddy;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -51,6 +54,21 @@ public class MainActivityProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //If its a guest login redirect the user to the register activity
+        if(FirebaseAuth.getInstance().getCurrentUser() == null){
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setMessage("Please register to access this page!").setPositiveButton("Redirect", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+
+                }
+            });
+            Intent intent = new Intent(getContext(),RegisterActivity.class);
+            startActivity(intent);
+        }
+
+
         final View view = inflater.inflate(R.layout.mainactivity_fragment_profile,
                 container, false);
 
@@ -74,6 +92,7 @@ public class MainActivityProfileFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("Add Connections"));
         tabLayout.addTab(tabLayout.newTab().setText("Added By Connections"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
 
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String username = email.substring(0, email.indexOf("@studybuddy.com"));

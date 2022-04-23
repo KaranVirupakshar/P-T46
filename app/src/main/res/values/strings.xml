@@ -22,4 +22,13 @@
     <string name="emptyViewMyConnections">No Connections!</string>
 
 
+    <string name = "cardTitle">Title</string>
+    <string name = "cardSubject">Subject</string>
+    <string name = "cardLocation">Location</string>
+    <string name = "guestLogin">Try as guest</string>
+
+    <string name="buttonTextJoin">Join</string>
+    <string name="buttonTextJoined">Joined</string>
+
+    <string name="emptyViewConnectionRequests">No Connections</string>
 </resources>

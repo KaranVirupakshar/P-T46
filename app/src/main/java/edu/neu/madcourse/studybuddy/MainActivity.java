@@ -11,6 +11,10 @@ import com.google.android.material.tabs.TabLayout;
 
 import util.MainActivityTabAdapter;
 
+
+//TODO Redirect to register page on create group button
+//TODO profile click register page
+//On guest login find groups/home page -->
 public class MainActivity extends AppCompatActivity {
 
     @Override

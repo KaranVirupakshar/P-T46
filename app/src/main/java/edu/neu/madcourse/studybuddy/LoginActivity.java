@@ -27,7 +27,7 @@ import util.CustomSnackBar;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextView registerTextView, loginHeader;
+    private TextView registerTextView, loginHeader, guestVisit;
     private EditText inputUsername, inputPassword;
     private ProgressBar progressBar;
     private Button btnLogin;
@@ -56,11 +56,22 @@ public class LoginActivity extends AppCompatActivity {
         registerTextView.setPaintFlags(registerTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         btnLogin = findViewById(R.id.btn_login);
         loginHeader = findViewById(R.id.loginHeader);
+        //The guests can just browse through the groups, and maybe check details?
+        guestVisit = findViewById(R.id.guestLogin);
 
         this.registerTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //Take the user to the new screen on clicking the text view.
+        guestVisit.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }
         });
