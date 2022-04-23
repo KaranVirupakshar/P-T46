@@ -53,5 +53,14 @@ public class GroupCard implements AdapterView.OnItemClickListener {
 
     }
 
-
+    @Override
+    public String
+    toString() {
+        return "GroupCard{" +
+                "title='" + title + '\'' +
+                ", subject='" + subject + '\'' +
+                ", location='" + location + '\'' +
+                ", groupId='" + groupId + '\'' +
+                '}';
+    }
 }
