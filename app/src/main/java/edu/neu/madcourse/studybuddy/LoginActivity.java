@@ -113,8 +113,9 @@ public class LoginActivity extends AppCompatActivity {
                                     inputPassword.setError(getString(R.string
                                             .minimum_password));
                                 } else {
-                                    snackBar.display(v, getApplicationContext(),getString(R.string.auth_failed), R.color.black);
+                                    snackBar.display(v, getApplicationContext(),"Incorrect username or password entered");
                                 }
+                                progressBar.setVisibility(View.INVISIBLE);
                             }
                         });
             }
