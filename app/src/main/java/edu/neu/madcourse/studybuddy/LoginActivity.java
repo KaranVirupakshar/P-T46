@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import androidx.core.content.res.ResourcesCompat;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -98,21 +100,21 @@ public class LoginActivity extends AppCompatActivity {
                 String email = username + "@studybuddy.com";
                 progressBar.setVisibility(View.VISIBLE);
                 auth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
+                        .addOnSuccessListener(LoginActivity.this, new OnSuccessListener<AuthResult>() {
                             @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (!task.isSuccessful()) {
-                                    if (password.length() < 6) {
-                                        inputPassword.setError(getString(R.string
-                                                .minimum_password));
-                                    } else {
-                                        snackBar.display(v, getApplicationContext(),getString(R.string.auth_failed), R.color.black);
-                                    }
+                            public void onSuccess(AuthResult authResult) {
+                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            }
+                        })
+                        .addOnFailureListener(LoginActivity.this, new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                if (password.length() < 6) {
+                                    inputPassword.setError(getString(R.string
+                                            .minimum_password));
                                 } else {
-                                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
+                                    snackBar.display(v, getApplicationContext(),getString(R.string.auth_failed), R.color.black);
                                 }
-                                finish();
                             }
                         });
             }
