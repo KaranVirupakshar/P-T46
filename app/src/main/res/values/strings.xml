@@ -30,5 +30,6 @@
     <string name="buttonTextJoin">Join</string>
     <string name="buttonTextJoined">Joined</string>
 
-    <string name="emptyViewConnectionRequests">No Connections</string>
+    <string name="addButton">Add</string>
+    <string name="addByUsername">Add By Username</string>
 </resources>

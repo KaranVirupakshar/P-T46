@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Profile_AddConnectionFragment"
+    android:gravity="center"
+    >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/addUsername_text_input_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:theme="@style/LoginTextInput"
+        android:hint="@string/addByUsername">
+
+        <EditText
+            android:id="@+id/addUsernameConnection"
+            android:layout_width="151dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:ems="10"
+            android:focusable="true"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="15" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/addConnectionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/addUsername_text_input_layout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/addconnection"
+        android:paddingHorizontal="@dimen/margin10dp"
+        android:text="@string/addButton"
+        android:textAllCaps="false"
+        android:textColor="@color/white" />
+
+    <ProgressBar
+        android:id="@+id/progressBarAddConnection"
+        android:layout_width="@dimen/progressBarWidth"
+        android:layout_height="@dimen/progressBarHeight"
+        android:layout_below="@+id/addConnectionButton"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:indeterminateTint="@color/black"/>
+
+
+
+</RelativeLayout>
