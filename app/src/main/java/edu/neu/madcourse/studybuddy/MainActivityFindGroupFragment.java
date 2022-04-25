@@ -17,6 +17,8 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import edu.neu.madcourse.studybuddy.Group;
+import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
+import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
 import util.CustomSnackBar;
 
 public class MainActivityFindGroupFragment extends Fragment {
@@ -45,6 +49,10 @@ public class MainActivityFindGroupFragment extends Fragment {
     private final int PERMISSION_ID = 123;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private String locationZip;
+    private RecyclerView recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private GroupCardViewAdapter recyclerViewAdapter;
+    private List<GroupCard> groupCards;
 
 
     public MainActivityFindGroupFragment() {
@@ -79,6 +87,7 @@ public class MainActivityFindGroupFragment extends Fragment {
         checkedLocation = (CheckBox) view.findViewById(R.id.findByLocation);
         checkedZip = (CheckBox) view.findViewById(R.id.findByZip);
         snackBar = new CustomSnackBar();
+        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerView);
 
         checkedLocation.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,6 +208,7 @@ public class MainActivityFindGroupFragment extends Fragment {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     groups = new ArrayList<>();
+                    groupCards = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         groups.add(document.toObject(edu.neu.madcourse.studybuddy.Group.class));
                     }
@@ -206,10 +216,31 @@ public class MainActivityFindGroupFragment extends Fragment {
                         snackBar
                                 .display(view, getContext(), "No matching groups found", R.color.lightBlue);
                     }
+                    createRecyclerView();
+
                 }
             }
         });
+    }
 
+    /**
+     * A method to create a recycler view.
+     */
+    void createRecyclerView(){
+        layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setHasFixedSize(true);
+        //Pass groupcards to the adapter
+        for(edu.neu.madcourse.studybuddy.Group group : groups){
+            GroupCard groupCard = new GroupCard(group.title,group.subject, group.location);
+            groupCards.add(groupCard);
+        }
+        recyclerViewAdapter = new GroupCardViewAdapter(groupCards);
+
+
+        //TODO : Fetch groupId so that user can join them when one accesses it
+
+        recyclerView.setAdapter(recyclerViewAdapter);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void onClickFindByLocation() {
