@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin10dp">
+
+    <ImageView
+        android:id="@+id/myConnectionLogo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/account"
+        android:layout_marginTop="@dimen/margin4dp"
+        android:paddingLeft="@dimen/margin95dp"
+
+        />
+
+    <TextView
+        android:id="@+id/myConnectionsRecycleViewAdapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="JohnDoe"
+        android:textColor="@color/black"
+        android:layout_gravity="start"
+        android:textSize="20sp"
+        android:layout_weight="1"/>
+
+</LinearLayout>
