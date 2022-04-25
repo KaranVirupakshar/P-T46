@@ -57,5 +57,11 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation 'com.google.android.gms:play-services-auth:20.1.0'
     implementation 'com.adevinta.android:leku:9.1.4'
+    implementation 'com.github.kapilmhr:AlphabetIndexFastScrollRecyclerview:1.0.0'
+    implementation 'com.firebaseui:firebase-ui-database:8.0.1'
+    implementation 'com.firebaseui:firebase-ui-firestore:8.0.1'
+    implementation 'com.firebaseui:firebase-ui-auth:8.0.1'
+    implementation 'com.firebaseui:firebase-ui-storage:8.0.1'
+
 }
 apply plugin: 'com.google.gms.google-services'
