@@ -36,6 +36,7 @@ import java.util.Set;
 import util.AcceptRejectButtonListener;
 import util.CustomSnackBar;
 import util.Connection;
+import util.ConnectionRequestRecyclerViewAdapter;
 
 public class Profile_ConnectionRequestsFragment extends Fragment {
 
@@ -45,6 +46,7 @@ public class Profile_ConnectionRequestsFragment extends Fragment {
     private ArrayList<Connection> pendingConnectionRequests;
     private RecyclerView myConnectionRequestsRecyclerView;
     private TextView emptyRecyclerViewConnectionRequests;
+    private ConnectionRequestRecyclerViewAdapter connectionRequestRecyclerViewAdapter;
     private AcceptRejectButtonListener acceptRejectButtonListener;
     private FirebaseFirestore db;
     private CustomSnackBar snackBar;
@@ -192,7 +194,9 @@ public class Profile_ConnectionRequestsFragment extends Fragment {
                         }
                     }
 
-
+                    emptyRecyclerViewConnectionRequests.setVisibility(pendingConnectionRequests.size() == 0 ? View.VISIBLE : View.GONE);
+                    connectionRequestRecyclerViewAdapter = new ConnectionRequestRecyclerViewAdapter(pendingConnectionRequests, mListener, acceptRejectButtonListener);
+                    myConnectionRequestsRecyclerView.setAdapter(connectionRequestRecyclerViewAdapter);
                 }
             }
         });
