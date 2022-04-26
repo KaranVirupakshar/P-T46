@@ -140,8 +140,12 @@ public class MainActivityHomeFragment extends Fragment {
     void processCollectionData(CollectionReference collectionReference){
 
         FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-
+        //Only fetch those groups from the table that contain
+        String userId = user.getUid();
         //TODO : Add logic
+
+
+
         collectionReference.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 System.out.println("We are getting the data!!!");

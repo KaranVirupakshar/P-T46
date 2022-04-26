@@ -17,6 +17,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
     public TextView subject;
     public TextView location;
     public Button cardButton;
+
     private FirebaseDatabase firebaseDatabase;
 
     public GroupCardViewHolder(@NonNull View itemView, final AdapterView.OnItemClickListener onItemClickListener) {
