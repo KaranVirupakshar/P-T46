@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
@@ -15,7 +16,11 @@ import util.MainActivityTabAdapter;
 //TODO Redirect to register page on create group button
 //TODO profile click register page
 //On guest login find groups/home page -->
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements
+        MainActivityProfileFragment.OnFragmentInteractionListener,
+        Profile_ConnectionListFragment.OnListFragmentInteractionListener,
+        Profile_AddConnectionFragment.OnFragmentInteractionListener,
+        Profile_ConnectionRequestsFragment.OnListFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,5 +66,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 }
+    @Override
+    public void onFragmentInteraction(Uri uri) {
+
+    }
 
 }
