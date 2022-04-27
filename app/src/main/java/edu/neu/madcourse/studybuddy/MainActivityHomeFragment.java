@@ -32,6 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -40,11 +41,17 @@ import org.checkerframework.checker.units.qual.A;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
+import edu.neu.madcourse.studybuddy.models.UserGroups;
 import util.CustomSnackBar;
 
 public class MainActivityHomeFragment extends Fragment {
@@ -139,20 +146,40 @@ public class MainActivityHomeFragment extends Fragment {
      */
     void processCollectionData(CollectionReference collectionReference){
 
+        CollectionReference userAndGroups = db.collection("userGroups");
+        Query query;
         FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
         //Only fetch those groups from the table that contain
         String userId = user.getUid();
-        //TODO : Add logic
 
-
+        query = userAndGroups.whereEqualTo("user", userId);
+        //The groups the user belongs to.
+        final UserGroups[] userGroup = new UserGroups[1];
+        //fetch all the group ids the user belongs to
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        userGroup[0] = documentSnapshot.toObject(UserGroups.class);
+                    }
+                }
+            }
+        });
+        //Obtain all the groupIds here
+        Set<String> groupIds = new HashSet<String>(Arrays.asList(userGroup[0].getGroups()));
 
         collectionReference.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 System.out.println("We are getting the data!!!");
-                List<edu.neu.madcourse.studybuddy.Group> groups = new ArrayList<>();
+                Map<String, edu.neu.madcourse.studybuddy.Group> groups =
+                        new HashMap<String, edu.neu.madcourse.studybuddy.Group>();
+                // List<edu.neu.madcourse.studybuddy.Group> groups = new ArrayList<>();
                 for(QueryDocumentSnapshot document : task.getResult()){
                     System.out.println("Inside here " + document.toObject(edu.neu.madcourse.studybuddy.Group.class));
-                    groups.add(document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                    if(groupIds.contains(document.getId())) {
+                        groups.put(document.getId(), document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                    }
                 }
                 addGroupToCards(groups);
             }
@@ -162,14 +189,16 @@ public class MainActivityHomeFragment extends Fragment {
     /**
      * Use the fetched groups to form the card here
      */
-    void addGroupToCards(List<edu.neu.madcourse.studybuddy.Group> groups){
+    void addGroupToCards(Map<String, edu.neu.madcourse.studybuddy.Group> groups){
         System.out.println("This is called!!");
         System.out.println(groups);
-        for(edu.neu.madcourse.studybuddy.Group group : groups){
-            GroupCard groupCard = new GroupCard(group.title,group.subject, group.location);
+
+        //Go through a map that relates the two.
+        for(String groupId : groups.keySet()){
+            edu.neu.madcourse.studybuddy.Group group = groups.get(groupId);
+            GroupCard groupCard = new GroupCard(group.title,group.subject, group.location, groupId);
             groupCards.add(groupCard);
         }
-
         createRecyclerView();
     }
 
@@ -179,6 +208,13 @@ public class MainActivityHomeFragment extends Fragment {
     void createRecyclerView(){
         System.out.println("The groupcards here are hopefully not lost");
         System.out.println(this.groupCards.toString());
+
+        // If the group size is zero show a text that shows that the user hasn't joined any group
+        if(groupCards.size() == 0){
+
+            return;
+        }
+
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView = view.findViewById(R.id.homePageRecyclerView);
         recyclerView.setHasFixedSize(true);
