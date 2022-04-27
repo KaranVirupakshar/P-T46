@@ -196,7 +196,8 @@ public class MainActivityHomeFragment extends Fragment {
         //Go through a map that relates the two.
         for(String groupId : groups.keySet()){
             edu.neu.madcourse.studybuddy.Group group = groups.get(groupId);
-            GroupCard groupCard = new GroupCard(group.title,group.subject, group.location, groupId);
+            GroupCard groupCard = new GroupCard(group.title,group.subject,
+                    group.location, groupId);
             groupCards.add(groupCard);
         }
         createRecyclerView();

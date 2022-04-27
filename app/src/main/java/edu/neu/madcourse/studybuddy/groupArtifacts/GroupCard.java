@@ -12,6 +12,13 @@ public class GroupCard implements AdapterView.OnItemClickListener {
     String subject;
     String location;
     String groupId;
+
+    /**
+     * This constructor is mainly used for those buttons where the user has not joined the group.
+     * @param title The title of the group.
+     * @param subject The subject the group discusses.
+     * @param location The location where the group meets.
+     */
     public GroupCard(String title, String date, String location) {
         this.title = title;
         this.subject = date;
@@ -42,6 +49,14 @@ public class GroupCard implements AdapterView.OnItemClickListener {
 
     public String getLocation() {
         return location;
+    }
+
+    /**
+     * A setter for the groupId.
+     * @param groupId The groupId for the card.
+     */
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
     }
 
     public String getGroupId() {

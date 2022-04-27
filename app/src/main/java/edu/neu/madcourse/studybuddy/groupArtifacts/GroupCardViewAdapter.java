@@ -8,9 +8,24 @@ import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import edu.neu.madcourse.studybuddy.R;
+import edu.neu.madcourse.studybuddy.models.UserGroups;
 
 
 /**
@@ -20,6 +35,8 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
 
     private List<GroupCard> groupCards;
     private AdapterView.OnItemClickListener listener;
+
+
 
     public GroupCardViewAdapter(List<GroupCard> groupCards) {
         this.groupCards = groupCards;
@@ -35,7 +52,37 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
     @Override
     public void onBindViewHolder(@NonNull GroupCardViewHolder holder, int position) {
         GroupCard currentItem = groupCards.get(position);
+        
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference userAndGroups = db.collection("userGroups");
+        Query query;
+        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
+        String userId = user.getUid();
+        query = userAndGroups.whereEqualTo("user", userId);
 
+        //The groups the user belongs to.
+        final UserGroups[] userGroup = new UserGroups[1];
+        //fetch all the group ids the user belongs to
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        userGroup[0] = documentSnapshot.toObject(UserGroups.class);
+                    }
+                }
+            }
+        });
+
+        //Obtain all the groupIds here
+        Set<String> groupIds = new HashSet<String>(Arrays.asList(userGroup[0].getGroups()));
+
+        if(groupIds.contains(currentItem.groupId)){
+            holder.cardButton.setText("Leave!");
+        }
+        else {
+            holder.cardButton.setText("Join");
+        }
         holder.title.setText(currentItem.title);
         holder.subject.setText(currentItem.subject);
         holder.location.setText(currentItem.location);
