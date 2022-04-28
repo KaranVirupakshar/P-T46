@@ -52,7 +52,9 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
     @Override
     public void onBindViewHolder(@NonNull GroupCardViewHolder holder, int position) {
         GroupCard currentItem = groupCards.get(position);
-        
+
+        //Store the group Id so that it can be added to the user
+        holder.setGroupId(currentItem.groupId);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference userAndGroups = db.collection("userGroups");
         Query query;
