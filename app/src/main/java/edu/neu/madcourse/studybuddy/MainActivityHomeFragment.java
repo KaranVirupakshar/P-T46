@@ -147,11 +147,26 @@ public class MainActivityHomeFragment extends Fragment {
     void processCollectionData(CollectionReference collectionReference){
 
         CollectionReference userAndGroups = db.collection("userGroups");
+        final int[] count = new int[1];
+        userAndGroups.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    count[0] = task.getResult().size();
+                    System.out.println("Count is " + task.getResult().size());
+                }
+                else{
+                    count[0] = -1;
+                    System.out.println("Collection empty");
+                }
+            }
+        });
+        System.out.println(count[0]);
         Query query;
         FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
         //Only fetch those groups from the table that contain
         String userId = user.getUid();
-
+        System.out.println(userId);
         query = userAndGroups.whereEqualTo("user", userId);
         //The groups the user belongs to.
         final UserGroups[] userGroup = new UserGroups[1];
@@ -160,8 +175,11 @@ public class MainActivityHomeFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
+                    System.out.println("Successful!!");
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
+                        System.out.println("here");
                         userGroup[0] = documentSnapshot.toObject(UserGroups.class);
+                        System.out.println(userGroup[0]);
                     }
                 }
             }
@@ -177,7 +195,7 @@ public class MainActivityHomeFragment extends Fragment {
                 // List<edu.neu.madcourse.studybuddy.Group> groups = new ArrayList<>();
                 for(QueryDocumentSnapshot document : task.getResult()){
                     System.out.println("Inside here " + document.toObject(edu.neu.madcourse.studybuddy.Group.class));
-                    if(groupIds.contains(document.getId())) {
+                    if(groupIds!= null && groupIds.contains(document.getId())) {
                         groups.put(document.getId(), document.toObject(edu.neu.madcourse.studybuddy.Group.class));
                     }
                 }
