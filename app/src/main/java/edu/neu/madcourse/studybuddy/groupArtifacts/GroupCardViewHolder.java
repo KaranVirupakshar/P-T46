@@ -56,30 +56,39 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
         String userId = user.getUid();
         query = userAndGroups.whereEqualTo("user", userId);
 
-        //The groups the user belongs to.
-        final UserGroups[] userGroup = new UserGroups[1];
-        final String[] documentId = new String[1];
-        //fetch all the group ids the user belongs to
+
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                String groupId = "";
+                UserGroups userGroups;
                 if(task.isSuccessful()){
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                        documentId[0] = documentSnapshot.getId();
-                        userGroup[0] = documentSnapshot.toObject(UserGroups.class);
+                        groupId = documentSnapshot.getId();
+                        userGroups = documentSnapshot.toObject(UserGroups.class);
+                        buttonLogicHelper(groupId, userGroups, userAndGroups);
                     }
+
                 }
             }
         });
 
-        //Obtain all the groupIds here
-        Set<String> groupIds = new HashSet<String>(userGroup[0].getGroups());
+        //Go to the chat activity for the group from here once its done
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+            }
+        });
+    }
+
+    void buttonLogicHelper(String documentId, UserGroups userGroups, CollectionReference userAndGroups){
         //Make db calls for the user to join the group
+        Set<String> groupIds = new HashSet<>(userGroups.getGroups());
         cardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DocumentReference documentReference= userAndGroups.document(documentId[0]);
+                DocumentReference documentReference= userAndGroups.document(documentId);
 
                 //If groupId is not present add it to the users groups -> which will form a new group.
                 if(!groupIds.contains(groupId)){
@@ -90,12 +99,6 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
-        //Go to the chat activity for the group from here once its done
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-            }
-        });
     }
+
 }

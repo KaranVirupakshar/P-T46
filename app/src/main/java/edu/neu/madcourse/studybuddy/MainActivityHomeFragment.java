@@ -169,11 +169,8 @@ public class MainActivityHomeFragment extends Fragment {
      */
     void processCollectionData(UserGroups userGroup){
         //Obtain all the groupIds here
-        System.out.println(userGroup.toString());
         CollectionReference collectionReference = db.collection("studyGroups");
-
         Set<String> groupIds = new HashSet<>(userGroup.getGroups());
-        System.out.println(groupIds);
         collectionReference.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 System.out.println("We are getting the data!!!");
@@ -197,9 +194,6 @@ public class MainActivityHomeFragment extends Fragment {
      * Use the fetched groups to form the card here
      */
     void addGroupToCards(Map<String, edu.neu.madcourse.studybuddy.Group> groups){
-        System.out.println("This is called!!");
-        System.out.println(groups);
-
         //Go through a map that relates the two.
         for(String groupId : groups.keySet()){
             edu.neu.madcourse.studybuddy.Group group = groups.get(groupId);

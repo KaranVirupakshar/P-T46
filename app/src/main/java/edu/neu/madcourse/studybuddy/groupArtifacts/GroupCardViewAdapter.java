@@ -62,23 +62,23 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
         String userId = user.getUid();
         query = userAndGroups.whereEqualTo("user", userId);
 
-        //The groups the user belongs to.
-        final UserGroups[] userGroup = new UserGroups[1];
-        //fetch all the group ids the user belongs to
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
+                    UserGroups userGroup;
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                        userGroup[0] = documentSnapshot.toObject(UserGroups.class);
+                        userGroup = documentSnapshot.toObject(UserGroups.class);
+                        helper(holder,userGroup,currentItem);
                     }
                 }
             }
         });
+    }
 
-        //Obtain all the groupIds here
-        Set<String> groupIds = new HashSet<String>(userGroup[0].getGroups());
 
+    void helper(GroupCardViewHolder holder, UserGroups userGroup, GroupCard currentItem){
+        Set<String> groupIds = new HashSet<String>(userGroup.getGroups());
         if(groupIds.contains(currentItem.groupId)){
             holder.cardButton.setText("Leave!");
         }
