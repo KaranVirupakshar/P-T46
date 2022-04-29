@@ -77,7 +77,7 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
         });
 
         //Obtain all the groupIds here
-        Set<String> groupIds = new HashSet<String>(Arrays.asList(userGroup[0].getGroups()));
+        Set<String> groupIds = new HashSet<String>(userGroup[0].getGroups());
 
         if(groupIds.contains(currentItem.groupId)){
             holder.cardButton.setText("Leave!");

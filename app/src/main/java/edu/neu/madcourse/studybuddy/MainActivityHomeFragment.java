@@ -2,6 +2,7 @@ package edu.neu.madcourse.studybuddy;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +49,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
@@ -131,8 +133,7 @@ public class MainActivityHomeFragment extends Fragment {
      * A method that fetches the groups from the firestore DB and populates the recycler view in the home page.
      */
     void init(){
-        CollectionReference collectionReference = db.collection("studyGroups");
-        processCollectionData(collectionReference);
+        processUserGroupData();
     }
 
 
@@ -141,52 +142,38 @@ public class MainActivityHomeFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    /**
-     * Process collection data and convert to a group object here which are later used as cards
-     */
-    void processCollectionData(CollectionReference collectionReference){
 
+    void processUserGroupData(){
         CollectionReference userAndGroups = db.collection("userGroups");
-        final int[] count = new int[1];
-        userAndGroups.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    count[0] = task.getResult().size();
-                    System.out.println("Count is " + task.getResult().size());
-                }
-                else{
-                    count[0] = -1;
-                    System.out.println("Collection empty");
-                }
-            }
-        });
-        System.out.println(count[0]);
         Query query;
         FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
         //Only fetch those groups from the table that contain
         String userId = user.getUid();
-        System.out.println(userId);
         query = userAndGroups.whereEqualTo("user", userId);
-        //The groups the user belongs to.
-        final UserGroups[] userGroup = new UserGroups[1];
-        //fetch all the group ids the user belongs to
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    System.out.println("Successful!!");
                     for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                        System.out.println("here");
-                        userGroup[0] = documentSnapshot.toObject(UserGroups.class);
-                        System.out.println(userGroup[0]);
+                        UserGroups userGroup = documentSnapshot.toObject(UserGroups.class);
+                        processCollectionData(userGroup);
                     }
                 }
             }
         });
-        //Obtain all the groupIds here
-        Set<String> groupIds = new HashSet<String>(Arrays.asList(userGroup[0].getGroups()));
 
+    }
+
+    /**
+     * Process collection data and convert to a group object here which are later used as cards
+     */
+    void processCollectionData(UserGroups userGroup){
+        //Obtain all the groupIds here
+        System.out.println(userGroup.toString());
+        CollectionReference collectionReference = db.collection("studyGroups");
+
+        Set<String> groupIds = new HashSet<>(userGroup.getGroups());
+        System.out.println(groupIds);
         collectionReference.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
                 System.out.println("We are getting the data!!!");
@@ -195,6 +182,7 @@ public class MainActivityHomeFragment extends Fragment {
                 // List<edu.neu.madcourse.studybuddy.Group> groups = new ArrayList<>();
                 for(QueryDocumentSnapshot document : task.getResult()){
                     System.out.println("Inside here " + document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                    System.out.println(document.getId());
                     if(groupIds!= null && groupIds.contains(document.getId())) {
                         groups.put(document.getId(), document.toObject(edu.neu.madcourse.studybuddy.Group.class));
                     }
@@ -203,6 +191,7 @@ public class MainActivityHomeFragment extends Fragment {
             }
         });
     }
+
 
     /**
      * Use the fetched groups to form the card here

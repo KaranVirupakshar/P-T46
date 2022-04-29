@@ -1,13 +1,18 @@
 package edu.neu.madcourse.studybuddy.models;
 
+import java.util.List;
+
 /**
  * A class that maps a user and the various groups they belong to.
  */
 public class UserGroups {
     String user;
-    String [] groups;
+    List<String> groups;
 
-    public UserGroups(String user, String[] groups) {
+    public UserGroups() {
+    }
+
+    public UserGroups(String user, List<String> groups) {
         this.user = user;
         this.groups = groups;
     }
@@ -16,7 +21,15 @@ public class UserGroups {
         return user;
     }
 
-    public String[] getGroups() {
+    public List<String> getGroups() {
         return groups;
+    }
+
+    @Override
+    public String toString() {
+        return "UserGroups{" +
+                "user='" + user + '\'' +
+                ", groups=" + groups.toString() +
+                '}';
     }
 }

@@ -73,7 +73,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
         });
 
         //Obtain all the groupIds here
-        Set<String> groupIds = new HashSet<String>(Arrays.asList(userGroup[0].getGroups()));
+        Set<String> groupIds = new HashSet<String>(userGroup[0].getGroups());
 
         //Make db calls for the user to join the group
         cardButton.setOnClickListener(new View.OnClickListener() {
