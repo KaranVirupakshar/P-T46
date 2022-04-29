@@ -90,6 +90,8 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
         holder.location.setText(currentItem.location);
     }
 
+
+
     @Override
     public int getItemCount() {
         return groupCards!=null ? groupCards.size() : 0;
