@@ -41,6 +41,10 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
         this.groupId = groupId;
     }
 
+    public String getGroupId() {
+        return groupId;
+    }
+
     private FirebaseDatabase firebaseDatabase;
 
     public GroupCardViewHolder(@NonNull View itemView, final AdapterView.OnItemClickListener onItemClickListener) {
@@ -50,7 +54,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
         location = itemView.findViewById(R.id.group_location);
         cardButton = itemView.findViewById(R.id.groupCardButton);
 
-        refreshCalls();
+        //refreshCalls();
 
         //Go to the chat activity for the group from here once its done
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +65,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    void buttonLogicHelper(String documentId, UserGroups userGroups, CollectionReference userAndGroups){
+/*    void buttonLogicHelper(String documentId, UserGroups userGroups, CollectionReference userAndGroups){
         //Make db calls for the user to join the group
         Set<String> groupIds = new HashSet<>(userGroups.getGroups());
         cardButton.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +78,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
                 }
                 else{
                     documentReference.update("groups", FieldValue.arrayRemove(groupId));
+
                 }
             }
         });
@@ -102,6 +107,6 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
                 }
             }
         });
-    }
+    }*/
 
 }

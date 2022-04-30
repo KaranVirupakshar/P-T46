@@ -32,8 +32,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
 import edu.neu.madcourse.studybuddy.Group;
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
@@ -45,7 +48,7 @@ public class MainActivityFindGroupFragment extends Fragment {
     private CheckBox checkedZip, checkedLocation;
     private FirebaseFirestore db;
     CustomSnackBar snackBar;
-    private List<Group> groups;
+    private Map<String,Group> groups;
     private final int PERMISSION_ID = 123;
     private FusedLocationProviderClient fusedLocationProviderClient;
     private String locationZip;
@@ -207,10 +210,11 @@ public class MainActivityFindGroupFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    groups = new ArrayList<>();
+                    groups = new HashMap<String, Group>() {
+                    };
                     groupCards = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        groups.add(document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                        groups.put(document.getId(),document.toObject(edu.neu.madcourse.studybuddy.Group.class));
                     }
                     if (groups.size() == 0){
                         snackBar
@@ -230,8 +234,9 @@ public class MainActivityFindGroupFragment extends Fragment {
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setHasFixedSize(true);
         //Pass groupcards to the adapter
-        for(edu.neu.madcourse.studybuddy.Group group : groups){
-            GroupCard groupCard = new GroupCard(group.title,group.subject, group.location);
+        for(String groupId : groups.keySet()){
+            Group group = groups.get(groupId);
+            GroupCard groupCard = new GroupCard(group.title,group.subject, group.location, groupId);
             groupCards.add(groupCard);
         }
         recyclerViewAdapter = new GroupCardViewAdapter(groupCards);
