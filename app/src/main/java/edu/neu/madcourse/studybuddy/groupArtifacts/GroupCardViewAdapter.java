@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -16,8 +17,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -27,6 +30,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import edu.neu.madcourse.studybuddy.MainActivityHomeFragment;
 import edu.neu.madcourse.studybuddy.R;
 import edu.neu.madcourse.studybuddy.models.UserGroups;
 
@@ -76,6 +80,7 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
                 }
             }
         });
+
     }
 
 
@@ -116,9 +121,10 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
 
     void notifyAdapter(int position){
         Log.i("notifyAdapter", "This called!");
-        this.notifyItemInserted(position);
-        notifyDataSetChanged();
+        this.notifyDataSetChanged();
     }
+
+
 
 
     void refreshCalls(GroupCardViewHolder holder, String groupId, int position){

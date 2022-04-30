@@ -82,6 +82,10 @@ public class MainActivityHomeFragment extends Fragment {
     private View view;
     CustomSnackBar snackBar;
 
+    public GroupCardViewAdapter getRecyclerViewAdapter() {
+        return recyclerViewAdapter;
+    }
+
     public MainActivityHomeFragment() {
         firebaseAuth = FirebaseAuth.getInstance();
         this.groupCards = new ArrayList<>();
@@ -93,6 +97,8 @@ public class MainActivityHomeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -173,13 +179,10 @@ public class MainActivityHomeFragment extends Fragment {
         Set<String> groupIds = new HashSet<>(userGroup.getGroups());
         collectionReference.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                System.out.println("We are getting the data!!!");
                 Map<String, edu.neu.madcourse.studybuddy.Group> groups =
                         new HashMap<String, edu.neu.madcourse.studybuddy.Group>();
                 // List<edu.neu.madcourse.studybuddy.Group> groups = new ArrayList<>();
                 for(QueryDocumentSnapshot document : task.getResult()){
-                    System.out.println("Inside here " + document.toObject(edu.neu.madcourse.studybuddy.Group.class));
-                    System.out.println(document.getId());
                     if(groupIds!= null && groupIds.contains(document.getId())) {
                         groups.put(document.getId(), document.toObject(edu.neu.madcourse.studybuddy.Group.class));
                     }
