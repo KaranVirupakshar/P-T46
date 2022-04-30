@@ -27,6 +27,7 @@
         <entry key="app/src/main/res/drawable/friends_tab_background_unselected.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/drawable/friends_tab_layout_background.xml" value="0.21354166666666666" />
         <entry key="app/src/main/res/drawable/friends_tab_layout_background_selected.xml" value="0.21354166666666666" />
+        <entry key="app/src/main/res/drawable/ic_account_circle_black_24dp.xml" value="0.14895833333333333" />
         <entry key="app/src/main/res/drawable/tab_layout_selector.xml" value="0.2140625" />
         <entry key="app/src/main/res/layout/activity_event_invent.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.318450347703323" />
