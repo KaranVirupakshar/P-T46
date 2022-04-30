@@ -15,6 +15,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,7 +26,9 @@ import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -206,23 +209,29 @@ public class MainActivityFindGroupFragment extends Fragment {
                     .whereEqualTo("location", locationZip)
                     .whereEqualTo("subject", subject.getText().toString());
         }
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection("userGroups").addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    groups = new HashMap<String, Group>() {
-                    };
-                    groupCards = new ArrayList<>();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        groups.put(document.getId(),document.toObject(edu.neu.madcourse.studybuddy.Group.class));
-                    }
-                    if (groups.size() == 0){
-                        snackBar
-                                .display(view, getContext(), "No matching groups found", R.color.lightBlue);
-                    }
-                    createRecyclerView();
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            groups = new HashMap<String, Group>() {
+                            };
+                            groupCards = new ArrayList<>();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                groups.put(document.getId(),document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                            }
+                            if (groups.size() == 0){
+                                snackBar
+                                        .display(view, getContext(), "No matching groups found", R.color.lightBlue);
+                            }
+                            createRecyclerView();
 
-                }
+                        }
+                    }
+                });
+
             }
         });
     }
