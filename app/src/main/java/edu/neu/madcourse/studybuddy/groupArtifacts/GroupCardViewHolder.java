@@ -65,48 +65,4 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
         });
     }
 
-/*    void buttonLogicHelper(String documentId, UserGroups userGroups, CollectionReference userAndGroups){
-        //Make db calls for the user to join the group
-        Set<String> groupIds = new HashSet<>(userGroups.getGroups());
-        cardButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DocumentReference documentReference= userAndGroups.document(documentId);
-                //If groupId is not present add it to the users groups -> which will form a new group.
-                if(!groupIds.contains(groupId)){
-                    documentReference.update("groups", FieldValue.arrayUnion(groupId));
-                }
-                else{
-                    documentReference.update("groups", FieldValue.arrayRemove(groupId));
-
-                }
-            }
-        });
-    }
-
-    void refreshCalls(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference userAndGroups = db.collection("userGroups");
-        Query query;
-        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-        String userId = user.getUid();
-        query = userAndGroups.whereEqualTo("user", userId);
-
-
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                String groupId = "";
-                UserGroups userGroups;
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                        groupId = documentSnapshot.getId();
-                        userGroups = documentSnapshot.toObject(UserGroups.class);
-                        buttonLogicHelper(groupId, userGroups, userAndGroups);
-                    }
-                }
-            }
-        });
-    }*/
-
 }
