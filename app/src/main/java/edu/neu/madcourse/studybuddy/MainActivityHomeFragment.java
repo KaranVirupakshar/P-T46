@@ -138,6 +138,7 @@ public class MainActivityHomeFragment extends Fragment {
 
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
+        //Deprecated but does refresh the view
         super.setUserVisibleHint(isVisibleToUser);
         if (isVisibleToUser) {
             getFragmentManager().beginTransaction().detach(this).attach(this).commit();
