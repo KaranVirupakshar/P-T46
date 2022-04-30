@@ -1,9 +1,8 @@
 package edu.neu.madcourse.studybuddy;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,21 +13,26 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import util.ConnectionActivityPagerAdapter;
 import util.User;
+
 
 public class MainActivityProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-    private TextView userLogo, userName, fullName;
+    private OnFragmentInteractionListener mListener;
+    private TextView userLogo, userName, fullName, profileHeader;
     private Button logOutButton;
+    private Button chatButton;
 
     public MainActivityProfileFragment() {
     }
@@ -54,29 +58,14 @@ public class MainActivityProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        //If its a guest login redirect the user to the register activity
-        if(FirebaseAuth.getInstance().getCurrentUser() == null){
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage("Please register to access this page!").setPositiveButton("Redirect", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-
-                }
-            });
-            Intent intent = new Intent(getContext(),RegisterActivity.class);
-            startActivity(intent);
-        }
-
-
         final View view = inflater.inflate(R.layout.mainactivity_fragment_profile,
                 container, false);
-
         this.userLogo = view.findViewById(R.id.userLogo);
         this.userName = view.findViewById(R.id.userName);
         this.fullName = view.findViewById(R.id.fullName);
 
         this.logOutButton = view.findViewById(R.id.logoutButton);
+        this.chatButton = view.findViewById(R.id.logoutButton3);
 
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,16 +76,22 @@ public class MainActivityProfileFragment extends Fragment {
             }
         });
 
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MainActivityChatFragment.class);
+                startActivity(intent);
+            }
+        });
+
         final TabLayout tabLayout = view.findViewById(R.id.connectionsToolbar);
         tabLayout.addTab(tabLayout.newTab().setText("My Connections"));
         tabLayout.addTab(tabLayout.newTab().setText("Add Connections"));
-        tabLayout.addTab(tabLayout.newTab().setText("Added By Connections"));
+        tabLayout.addTab(tabLayout.newTab().setText("Added Me"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-
 
         String email = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         String username = email.substring(0, email.indexOf("@studybuddy.com"));
-
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference dr = db.collection("users").document(username);
 
@@ -112,6 +107,7 @@ public class MainActivityProfileFragment extends Fragment {
                                     String.valueOf(Character.toUpperCase(currentUser.getLastName().charAt(0)));
                     fullName.setText(userFullName);
                     userLogo.setText(userInitials);
+                    setUpViewPager(view, tabLayout, userFullName);
                 }
             }
         });
@@ -119,4 +115,57 @@ public class MainActivityProfileFragment extends Fragment {
         return view;
     }
 
+    // TODO: Rename method, update argument and hook method into UI event
+    public void onButtonPressed(Uri uri) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(uri);
+        }
+    }
+
+    private void setUpViewPager(View view, TabLayout tabLayout, String currUserFullName) {
+        final ViewPager viewPager = view.findViewById(R.id.myProfilePager);
+        final ConnectionActivityPagerAdapter myAdapter = new ConnectionActivityPagerAdapter(
+                getChildFragmentManager(), tabLayout.getTabCount(), currUserFullName);
+        viewPager.setAdapter(myAdapter);
+
+        viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+        viewPager.setOffscreenPageLimit(2);
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                viewPager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
+    }
 }
