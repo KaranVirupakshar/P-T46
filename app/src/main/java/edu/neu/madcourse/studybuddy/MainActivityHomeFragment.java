@@ -2,6 +2,7 @@ package edu.neu.madcourse.studybuddy;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -40,11 +42,18 @@ import org.checkerframework.checker.units.qual.A;
 import java.sql.Time;
 import java.time.DayOfWeek;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCard;
 import edu.neu.madcourse.studybuddy.groupArtifacts.GroupCardViewAdapter;
+import edu.neu.madcourse.studybuddy.models.UserGroups;
 import util.CustomSnackBar;
 
 public class MainActivityHomeFragment extends Fragment {
@@ -73,6 +82,10 @@ public class MainActivityHomeFragment extends Fragment {
     private View view;
     CustomSnackBar snackBar;
 
+    public GroupCardViewAdapter getRecyclerViewAdapter() {
+        return recyclerViewAdapter;
+    }
+
     public MainActivityHomeFragment() {
         firebaseAuth = FirebaseAuth.getInstance();
         this.groupCards = new ArrayList<>();
@@ -84,6 +97,8 @@ public class MainActivityHomeFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
+
 
     @Override
     public void onCreate(Bundle savedInstance) {
@@ -117,55 +132,113 @@ public class MainActivityHomeFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         //Get the initial data from the firestore db
         this.init();
+
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        //Deprecated but does refresh the view
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 
     /**
      * A method that fetches the groups from the firestore DB and populates the recycler view in the home page.
      */
     void init(){
-        CollectionReference collectionReference = db.collection("studyGroups");
-        processCollectionData(collectionReference);
+        processUserGroupData();
     }
-
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
+
+    void processUserGroupData(){
+        CollectionReference userAndGroups = db.collection("userGroups");
+        Query query;
+        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
+        //Only fetch those groups from the table that contain
+        String userId = user.getUid();
+        query = userAndGroups.whereEqualTo("user", userId);
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().isEmpty()){
+                        //Create a new document if the user doesn't exist in collection.
+                        addUserToUserGroups(userId,userAndGroups);
+                    }
+                    else {
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                            UserGroups userGroup = documentSnapshot.toObject(UserGroups.class);
+                            processCollectionData(userGroup);
+                        }
+                    }
+                }
+            }
+        });
+
+    }
+
+    /**
+     * A method that adds the user to the collection if it doesn't exist.
+     * @param userId The userId to be added to the collection.
+     */
+    void addUserToUserGroups(String userId, CollectionReference reference){
+        UserGroups userGroups = new UserGroups(userId, new ArrayList<>());
+        reference.add(userGroups).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.i("New User", "Added successfully to db!");
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("New user", "failed adding user!");
+                    }
+                });
+    }
+
     /**
      * Process collection data and convert to a group object here which are later used as cards
      */
-    void processCollectionData(CollectionReference collectionReference){
-
-        FirebaseUser user =  FirebaseAuth.getInstance().getCurrentUser();
-
-        //TODO : Add logic
+    void processCollectionData(UserGroups userGroup){
+        //Obtain all the groupIds here
+        CollectionReference collectionReference = db.collection("studyGroups");
+        Set<String> groupIds = new HashSet<>(userGroup.getGroups());
         collectionReference.get().addOnCompleteListener(task -> {
             if(task.isSuccessful()){
-                System.out.println("We are getting the data!!!");
-                List<edu.neu.madcourse.studybuddy.Group> groups = new ArrayList<>();
+                Map<String, edu.neu.madcourse.studybuddy.Group> groups =
+                        new HashMap<String, edu.neu.madcourse.studybuddy.Group>();
+                // List<edu.neu.madcourse.studybuddy.Group> groups = new ArrayList<>();
                 for(QueryDocumentSnapshot document : task.getResult()){
-                    System.out.println("Inside here " + document.toObject(edu.neu.madcourse.studybuddy.Group.class));
-                    groups.add(document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                    if(groupIds!= null && groupIds.contains(document.getId())) {
+                        groups.put(document.getId(), document.toObject(edu.neu.madcourse.studybuddy.Group.class));
+                    }
                 }
                 addGroupToCards(groups);
             }
         });
     }
 
+
     /**
      * Use the fetched groups to form the card here
      */
-    void addGroupToCards(List<edu.neu.madcourse.studybuddy.Group> groups){
-        System.out.println("This is called!!");
-        System.out.println(groups);
-        for(edu.neu.madcourse.studybuddy.Group group : groups){
-            GroupCard groupCard = new GroupCard(group.title,group.subject, group.location);
+    void addGroupToCards(Map<String, edu.neu.madcourse.studybuddy.Group> groups){
+        //Go through a map that relates the two.
+        for(String groupId : groups.keySet()){
+            edu.neu.madcourse.studybuddy.Group group = groups.get(groupId);
+            GroupCard groupCard = new GroupCard(group.title,group.subject,
+                    group.location, groupId);
             groupCards.add(groupCard);
         }
-
         createRecyclerView();
     }
 
@@ -173,8 +246,13 @@ public class MainActivityHomeFragment extends Fragment {
      * A method to create a recycler view.
      */
     void createRecyclerView(){
-        System.out.println("The groupcards here are hopefully not lost");
-        System.out.println(this.groupCards.toString());
+        // If the group size is zero show a text that shows that the user hasn't joined any group
+        if(groupCards.size() == 0){
+            recyclerTextView.setText("No groups joined!");
+            recyclerTextView.setVisibility(View.VISIBLE);
+            return;
+        }
+        recyclerTextView.setVisibility(View.INVISIBLE);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView = view.findViewById(R.id.homePageRecyclerView);
         recyclerView.setHasFixedSize(true);
