@@ -113,6 +113,13 @@ public class GroupCardViewAdapter extends RecyclerView.Adapter<GroupCardViewHold
                 }
                 else{
                     documentReference.update("groups", FieldValue.arrayRemove(groupId));
+                    for (int i = 0; i < groupCards.size(); i++) {
+                        GroupCard currentCard = groupCards.get(i);
+                        if (currentCard.groupId.equals(groupId)) {
+                            groupCards.remove(i);
+                            break;
+                        }
+                    }
                 }
                 notifyAdapter(position);
             }
