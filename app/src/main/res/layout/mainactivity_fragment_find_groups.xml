@@ -7,73 +7,84 @@
     android:orientation="vertical"
     tools:context=".MainActivityFindGroupFragment">
 
-    <EditText
-        android:id="@+id/searchSubject"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Subject"
-        app:layout_constraintBottom_toTopOf="@id/searchZipCode"
-        app:layout_constraintEnd_toStartOf="@+id/groupSearchButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/searchZipCode"
-        android:layout_width="250dp"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="24dp"
-        android:hint="Zip Code"
-        app:layout_constraintBottom_toTopOf="@+id/findByZip"
-        app:layout_constraintEnd_toStartOf="@+id/groupSearchButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/searchSubject" />
-
-    <Button
-        android:id="@+id/groupSearchButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="74dp"
-        android:layout_marginBottom="44dp"
-        android:text="SEARCH"
-        app:layout_constraintBottom_toTopOf="@+id/findByLocation"
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/searchSubject"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <CheckBox
-        android:id="@+id/findByZip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Find By Zip"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchZipCode" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <CheckBox
-        android:id="@+id/findByLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Find by current location"
-        app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/findByZip"
-        app:layout_constraintTop_toBottomOf="@+id/searchZipCode" />
+        <EditText
+            android:id="@+id/searchSubject"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="24dp"
+            android:hint="Subject" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="409dp"
-        android:layout_height="505dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        <EditText
+            android:id="@+id/searchZipCode"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="0dp"
+            android:hint="Zip Code" />
+
+        <Button
+            android:id="@+id/groupSearchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="37dp"
+            android:layout_marginBottom="44dp"
+            android:text="SEARCH" />
+
+        <CheckBox
+            android:id="@+id/findByZip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="-1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="64dp"
+            android:text="Find By Zip" />
+
+        <CheckBox
+            android:id="@+id/findByLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="44dp"
+            android:layout_marginBottom="63dp"
+            android:text="Find by current location" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="800dp"
+        android:layout_marginTop="150dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/findByZip" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="800dp" />
+
+    </RelativeLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

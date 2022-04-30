@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -32,7 +33,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -137,6 +140,12 @@ public class MainActivityHomeFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        getParentFragmentManager().beginTransaction().detach(this).attach(this).commit();
+    }
+
+    @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         //Deprecated but does refresh the view
         super.setUserVisibleHint(isVisibleToUser);
@@ -165,23 +174,30 @@ public class MainActivityHomeFragment extends Fragment {
         //Only fetch those groups from the table that contain
         String userId = user.getUid();
         query = userAndGroups.whereEqualTo("user", userId);
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        userAndGroups.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult().isEmpty()){
-                        //Create a new document if the user doesn't exist in collection.
-                        addUserToUserGroups(userId,userAndGroups);
-                    }
-                    else {
-                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                            UserGroups userGroup = documentSnapshot.toObject(UserGroups.class);
-                            processCollectionData(userGroup);
+            public void onEvent(@Nullable QuerySnapshot snapshots, @Nullable FirebaseFirestoreException error) {
+                query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if(task.isSuccessful()){
+                            if(task.getResult().isEmpty()){
+                                //Create a new document if the user doesn't exist in collection.
+                                addUserToUserGroups(userId,userAndGroups);
+                            }
+                            else {
+                                groupCards = new ArrayList<>();
+                                for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                                    UserGroups userGroup = documentSnapshot.toObject(UserGroups.class);
+                                    processCollectionData(userGroup);
+                                }
+                            }
                         }
                     }
-                }
+                });
             }
         });
+
 
     }
 
