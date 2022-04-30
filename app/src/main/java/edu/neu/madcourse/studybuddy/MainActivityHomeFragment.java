@@ -132,7 +132,16 @@ public class MainActivityHomeFragment extends Fragment {
         db = FirebaseFirestore.getInstance();
         //Get the initial data from the firestore db
         this.init();
+
         return view;
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            getFragmentManager().beginTransaction().detach(this).attach(this).commit();
+        }
     }
 
     /**
@@ -141,7 +150,6 @@ public class MainActivityHomeFragment extends Fragment {
     void init(){
         processUserGroupData();
     }
-
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -160,14 +168,40 @@ public class MainActivityHomeFragment extends Fragment {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot documentSnapshot : task.getResult()){
-                        UserGroups userGroup = documentSnapshot.toObject(UserGroups.class);
-                        processCollectionData(userGroup);
+                    if(task.getResult().isEmpty()){
+                        //Create a new document if the user doesn't exist in collection.
+                        addUserToUserGroups(userId,userAndGroups);
+                    }
+                    else {
+                        for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
+                            UserGroups userGroup = documentSnapshot.toObject(UserGroups.class);
+                            processCollectionData(userGroup);
+                        }
                     }
                 }
             }
         });
 
+    }
+
+    /**
+     * A method that adds the user to the collection if it doesn't exist.
+     * @param userId The userId to be added to the collection.
+     */
+    void addUserToUserGroups(String userId, CollectionReference reference){
+        UserGroups userGroups = new UserGroups(userId, new ArrayList<>());
+        reference.add(userGroups).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+            @Override
+            public void onSuccess(DocumentReference documentReference) {
+                Log.i("New User", "Added successfully to db!");
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("New user", "failed adding user!");
+                    }
+                });
     }
 
     /**
@@ -211,15 +245,13 @@ public class MainActivityHomeFragment extends Fragment {
      * A method to create a recycler view.
      */
     void createRecyclerView(){
-        System.out.println("The groupcards here are hopefully not lost");
-        System.out.println(this.groupCards.toString());
-
         // If the group size is zero show a text that shows that the user hasn't joined any group
         if(groupCards.size() == 0){
-
+            recyclerTextView.setText("No groups joined!");
+            recyclerTextView.setVisibility(View.VISIBLE);
             return;
         }
-
+        recyclerTextView.setVisibility(View.INVISIBLE);
         layoutManager = new LinearLayoutManager(getActivity());
         recyclerView = view.findViewById(R.id.homePageRecyclerView);
         recyclerView.setHasFixedSize(true);
