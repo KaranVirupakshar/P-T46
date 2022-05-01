@@ -34,9 +34,11 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
     Query query;
     private FirestoreRecyclerAdapter<Message, MessageAdapter.MessageHolder> adapter;
     private MultiAutoCompleteTextView input;
+    private ProgressBar pgBar;
     private String userId;
     private String userName;
     private String gId;
+
 
 
     @Override
@@ -47,20 +49,21 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
         FloatingActionButton btnSend = findViewById(R.id.btnSend);
         btnSend.setOnClickListener(this);
         input = findViewById(R.id.input);
+        pgBar = findViewById(R.id.loader);
         RecyclerView recyclerView = findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
-        Log.i("MainAcivity", " this os onCreate: " + user);
 
-        //this.gId = savedInstanceState.getString("groupId");
         Bundle b = getIntent().getExtras();
         this.gId = ""; // or other values
         if(b != null)
             this.gId = b.getString("groupId");
 
         System.out.println("Group Id: " + this.gId);
+
+
 
         if(user==null){
             startActivity(new Intent(this, LoginActivity.class));
@@ -81,12 +84,24 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                    pgBar.setVisibility(View.GONE);
                 }
             }
         });
         adapter = new MessageAdapter(query, userId, MainActivityChatFragment.this);
         recyclerView.setAdapter(adapter);
 
+//        query = database.collection("messages").orderBy("messageTime");
+//        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+//                if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+//                    pgBar.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+//        adapter = new MessageAdapter(query, userId, MainActivityChatFragment.this);
+//        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -97,7 +112,6 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
                 return;
             }
             database.collection("messages").add(new Message(userName, message, userId, gId));
-
             input.setText("");
         }
     }

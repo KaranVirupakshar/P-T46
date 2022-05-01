@@ -38,7 +38,6 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
     public TextView subject;
     public TextView location;
     public Button cardButton;
-    private Button chatButton;
 
     private String groupId;
 
@@ -68,6 +67,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View view) {
                 Intent intent = new Intent (view.getContext(), MainActivityChatFragment.class);
                 Bundle b = new Bundle();
+                System.out.println("Group Id in view holder: " + groupId);
                 b.putString("groupId", groupId);
                 intent.putExtras(b); //Put your id to your next Intent
                 view.getContext().startActivity(intent);
