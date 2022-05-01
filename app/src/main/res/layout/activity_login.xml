@@ -96,15 +96,6 @@
                 android:textColor="@color/black"
                 android:textSize="15sp" />
 
-            <TextView
-                android:id="@+id/guestLogin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/guestLogin"
-                android:textAlignment="center"
-                android:textColor="#000000"
-                android:textStyle="bold" />
-
             <ProgressBar
                 android:id="@+id/progressBar"
                 android:layout_width="@dimen/progressBarWidth"
