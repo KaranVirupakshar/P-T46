@@ -34,7 +34,6 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
     Query query;
     private FirestoreRecyclerAdapter<Message, MessageAdapter.MessageHolder> adapter;
     private MultiAutoCompleteTextView input;
-    private ProgressBar pgBar;
     private String userId;
     private String userName;
     private String gId;
@@ -48,7 +47,6 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
         FloatingActionButton btnSend = findViewById(R.id.btnSend);
         btnSend.setOnClickListener(this);
         input = findViewById(R.id.input);
-        pgBar = findViewById(R.id.loader);
         RecyclerView recyclerView = findViewById(R.id.list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
 

@@ -32,7 +32,6 @@ public class MainActivityProfileFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private TextView userLogo, userName, fullName, profileHeader;
     private Button logOutButton;
-    private Button chatButton;
 
     public MainActivityProfileFragment() {
     }
@@ -65,7 +64,7 @@ public class MainActivityProfileFragment extends Fragment {
         this.fullName = view.findViewById(R.id.fullName);
 
         this.logOutButton = view.findViewById(R.id.logoutButton);
-        this.chatButton = view.findViewById(R.id.logoutButton3);
+
 
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,13 +75,6 @@ public class MainActivityProfileFragment extends Fragment {
             }
         });
 
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivityChatFragment.class);
-                startActivity(intent);
-            }
-        });
 
         final TabLayout tabLayout = view.findViewById(R.id.connectionsToolbar);
         tabLayout.addTab(tabLayout.newTab().setText("My Connections"));
