@@ -55,30 +55,15 @@
 
         <Button
             android:id="@+id/groupCardButton"
-            android:layout_width="164dp"
+            android:layout_width="208dp"
             android:layout_height="wrap_content"
             android:layout_below="@id/group_location"
             android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginStart="27dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="217dp"
+            android:layout_marginStart="95dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="105dp"
             android:text="@string/buttonTextJoin"
-            android:textColor="#311B92"
-            app:cornerRadius="18dp"
-            tools:ignore="TextContrastCheck" />
-
-        <Button
-            android:id="@+id/groupCardButton2"
-            android:layout_width="164dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/group_location"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="217dp"
-            android:layout_marginTop="7dp"
-            android:layout_marginEnd="28dp"
-            android:text="Chat"
             android:textColor="#311B92"
             app:cornerRadius="18dp"
             tools:ignore="TextContrastCheck" />

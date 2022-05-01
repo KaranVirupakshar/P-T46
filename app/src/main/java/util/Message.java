@@ -6,6 +6,7 @@ public class Message {
     private String messageUser;
     private String messageText;
     private String messageUserId;
+    private String gId;
     private long messageTime;
 
     public Message(String messageUser, String messageText, String messageUserId) {
@@ -47,5 +48,13 @@ public class Message {
 
     public void setMessageTime(long messageTime) {
         this.messageTime = messageTime;
+    }
+
+    public void setgId(String gId) {
+        this.gId = gId;
+    }
+
+    public String getgId() {
+        return gId;
     }
 }

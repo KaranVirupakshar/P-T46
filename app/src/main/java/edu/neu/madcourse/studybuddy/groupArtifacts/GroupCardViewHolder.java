@@ -1,10 +1,12 @@
 package edu.neu.madcourse.studybuddy.groupArtifacts;
 
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +28,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.neu.madcourse.studybuddy.MainActivityChatFragment;
 import edu.neu.madcourse.studybuddy.R;
 import edu.neu.madcourse.studybuddy.models.UserGroups;
 
@@ -34,6 +37,7 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
     public TextView subject;
     public TextView location;
     public Button cardButton;
+    private Button chatButton;
 
     private String groupId;
 
@@ -56,10 +60,13 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
 
         //refreshCalls();
 
+
         //Go to the chat activity for the group from here once its done
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent (view.getContext(), MainActivityChatFragment.class);
+                view.getContext().startActivity(intent);
 
             }
         });
