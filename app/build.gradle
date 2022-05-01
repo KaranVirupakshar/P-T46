@@ -7,14 +7,14 @@ plugins {
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        release {
-            storeFile file('C:\\NEU\\Mobile\\Project\\projectKey.jks')
-            storePassword 'Team@46'
-            keyAlias 'projectKey'
-            keyPassword 'Team@46'
-        }
-    }
+//    signingConfigs {
+//        release {
+//            storeFile file('C:\\NEU\\Mobile\\Project\\projectKey.jks')
+//            storePassword 'Team@46'
+//            keyAlias 'projectKey'
+//            keyPassword 'Team@46'
+//        }
+//    }
 
 //    signingConfigs {
 //        release {
@@ -49,7 +49,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+//            signingConfig signingConfigs.release
 //            signingConfig signingConfigs.release
 //            signingConfig signingConfigs.release
         }

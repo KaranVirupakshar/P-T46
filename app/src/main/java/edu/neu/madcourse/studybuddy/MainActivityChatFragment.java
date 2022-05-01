@@ -62,7 +62,9 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
 
         System.out.println(user.getUid());
         userId = user.getUid();
-        userName = user.getDisplayName();
+        String n = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String m = n.substring(0, n.indexOf("@studybuddy.com"));
+        userName = m;
         database = FirebaseFirestore.getInstance();
         query = database.collection("messages").orderBy("messageTime");
         query.addSnapshotListener(new EventListener<QuerySnapshot>() {
