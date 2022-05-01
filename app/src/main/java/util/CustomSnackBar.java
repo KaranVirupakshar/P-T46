@@ -19,7 +19,7 @@ public class CustomSnackBar {
     public void display(View view, Context context, String message) {
         Snackbar snackbar = Snackbar.make(view, message, Snackbar.LENGTH_SHORT);
         View messageBarView = snackbar.getView();
-        messageBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.lightBlue));
+        messageBarView.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         snackbar.show();
     }
 

@@ -354,17 +354,17 @@ public class MainActivityHomeFragment extends Fragment {
                 // Validity of each field is checked
                 if (title.getText().length() == 0) {
                     snackBar
-                            .display(view, getContext(), "Please enter title of the group", R.color.lightBlue);
+                            .display(view, getContext(), "Please enter title of the group", R.color.colorAccent);
                     return;
                 }
                 else if (subject.getText().length() == 0) {
                     snackBar
-                            .display(view, getContext(), "Please enter subject of the group", R.color.lightBlue);
+                            .display(view, getContext(), "Please enter subject of the group", R.color.colorAccent);
                     return;
                 }
                 else if (location.getText().length() == 0){
                     snackBar
-                            .display(view, getContext(), "Please enter the zipcode", R.color.lightBlue);
+                            .display(view, getContext(), "Please enter the zipcode", R.color.colorAccent);
                     return;
                 }
 
@@ -372,25 +372,25 @@ public class MainActivityHomeFragment extends Fragment {
                     Integer.valueOf(location.getText().toString());
                     if (location.getText().length() != 5) {
                         snackBar
-                                .display(view, getContext(), "Please enter a valid zipcode", R.color.lightBlue);
+                                .display(view, getContext(), "Please enter a valid zipcode", R.color.colorAccent);
                         return;
                     }
                 }
                 catch (Exception e) {
                     snackBar
-                            .display(view, getContext(), "Please enter a valid zipcode", R.color.lightBlue);
+                            .display(view, getContext(), "Please enter a valid zipcode", R.color.colorAccent);
                     return;
                 }
 
 
                 if (description.getText().length() == 0) {
                     snackBar
-                            .display(view, getContext(), "Please enter description of the group", R.color.lightBlue);
+                            .display(view, getContext(), "Please enter description of the group", R.color.colorAccent);
                     return;
                 }
                 else if (days.size() == 0) {
                     snackBar
-                            .display(view, getContext(), "Please select atleast one day", R.color.lightBlue);
+                            .display(view, getContext(), "Please select atleast one day", R.color.colorAccent);
                     return;
                 }
 
@@ -407,13 +407,13 @@ public class MainActivityHomeFragment extends Fragment {
 
                     if (startTime.compareTo(endTime) == 1) {
                         snackBar
-                                .display(view, getContext(), "Please enter end time grater than start time", R.color.lightBlue);
+                                .display(view, getContext(), "Please enter end time grater than start time", R.color.colorAccent);
                         return;
                     }
                 }
                 catch (Exception e) {
                     snackBar
-                            .display(view, getContext(), "Please enter valid timings", R.color.lightBlue);
+                            .display(view, getContext(), "Please enter valid timings", R.color.colorAccent);
                     return;
                 }
 

@@ -76,50 +76,50 @@ public class RegisterActivity extends AppCompatActivity {
 
                 if (TextUtils.isEmpty(firstName)) {
                     snackBar
-                            .display(v, getApplicationContext(), "Please enter First Name!", R.color.lightBlue);
+                            .display(v, getApplicationContext(), "Please enter First Name!", R.color.colorAccent);
                     return;
                 } else if (TextUtils.isEmpty(lastName)) {
                     snackBar
-                            .display(v, getApplicationContext(), "Please enter Last Name!", R.color.lightBlue);
+                            .display(v, getApplicationContext(), "Please enter Last Name!", R.color.colorAccent);
                     return;
                 } else if (TextUtils.isEmpty(username)) {
-                    snackBar.display(v, getApplicationContext(), "Please enter username!", R.color.lightBlue);
+                    snackBar.display(v, getApplicationContext(), "Please enter username!", R.color.colorAccent);
                     return;
                 } else if (TextUtils.isEmpty(location)) {
-                    snackBar.display(v, getApplicationContext(), "Please enter location!", R.color.lightBlue);
+                    snackBar.display(v, getApplicationContext(), "Please enter location!", R.color.colorAccent);
                     return;
                 } else if (username.contains(" ")) {
-                    snackBar.display(v, getApplicationContext(), "Username cannot contain spaces!", R.color.lightBlue);
+                    snackBar.display(v, getApplicationContext(), "Username cannot contain spaces!", R.color.colorAccent);
                     return;
                 } else if (!username.toLowerCase().equals(username)) {
-                    snackBar.display(v, getApplicationContext(), "Username cannot contain uppercase letters!", R.color.lightBlue);
+                    snackBar.display(v, getApplicationContext(), "Username cannot contain uppercase letters!", R.color.colorAccent);
                     return;
                 } else if (TextUtils.isEmpty(password)) {
-                    snackBar.display(v, getApplicationContext(), "Please enter password!", R.color.lightBlue);
+                    snackBar.display(v, getApplicationContext(), "Please enter password!", R.color.colorAccent);
                     return;
                 } else if (firstName.length() > 25) {
                     snackBar.display(v, getApplicationContext(),
-                            "First Name is too long, maximum 25 characters!", R.color.lightBlue);
+                            "First Name is too long, maximum 25 characters!", R.color.colorAccent);
                     return;
                 } else if (lastName.length() > 25) {
                     snackBar.display(v, getApplicationContext(),
-                            "Last Name is too long, maximum 25 characters!", R.color.lightBlue);
+                            "Last Name is too long, maximum 25 characters!", R.color.colorAccent);
                     return;
                 } else if (username.length() > 15) {
                     snackBar.display(v, getApplicationContext(),
-                            "Username is too long, maximum 15 characters!", R.color.lightBlue);
+                            "Username is too long, maximum 15 characters!", R.color.colorAccent);
                     return;
                 } else if (location.length() > 25) {
                     snackBar.display(v, getApplicationContext(),
-                            "Location is too long, maximum 25 characters!", R.color.lightBlue);
+                            "Location is too long, maximum 25 characters!", R.color.colorAccent);
                     return;
                 } else if (password.length() < 6) {
                     snackBar.display(v, getApplicationContext(),
-                            "Password too short, enter minimum 6 characters!", R.color.lightBlue);
+                            "Password too short, enter minimum 6 characters!", R.color.colorAccent);
                     return;
                 } else if (!password.equals(retype_password)) {
                     snackBar
-                            .display(v, getApplicationContext(), "Passwords do not match!", R.color.lightBlue);
+                            .display(v, getApplicationContext(), "Passwords do not match!", R.color.colorAccent);
                     return;
                 }
 
@@ -132,7 +132,7 @@ public class RegisterActivity extends AppCompatActivity {
                                 if (!task.isSuccessful()) {
                                     System.out.println("unsuc");
                                     snackBar.display(v, getApplicationContext(),
-                                            "Error: Account creation failed:" + task.getException(), R.color.lightBlue);
+                                            "Error: Account creation failed:" + task.getException(), R.color.colorAccent);
                                 }
                                 else {
                                     System.out.println("suc1");
@@ -157,7 +157,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         public void onComplete(@NonNull Task<Void> task) {
                                             startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                                             snackBar.display(v, getApplicationContext(), "Account created successfully.",
-                                                    R.color.lightBlue);
+                                                    R.color.colorAccent);
                                             System.out.println("comp1");
 
                                             progressBar.setVisibility(View.INVISIBLE);
@@ -168,7 +168,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         @Override
                                         public void onFailure(@NonNull Exception e) {
                                             snackBar.display(v, getApplicationContext(),
-                                                    "Error: Failure writing to database.", R.color.lightBlue);
+                                                    "Error: Failure writing to database.", R.color.colorAccent);
                                             System.out.println("fail1");
 
                                             progressBar.setVisibility(View.INVISIBLE);

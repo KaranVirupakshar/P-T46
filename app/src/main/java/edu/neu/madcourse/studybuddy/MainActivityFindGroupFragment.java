@@ -162,12 +162,12 @@ public class MainActivityFindGroupFragment extends Fragment {
     private void searchSuitableGroups(View view) {
         if (subject.getText().length() == 0) {
             snackBar
-                    .display(view, getContext(), "Please enter the subject information", R.color.lightBlue);
+                    .display(view, getContext(), "Please enter the subject information", R.color.colorAccent);
             return;
         }
         if (!checkedZip.isChecked() && !checkedLocation.isChecked()) {
             snackBar
-                    .display(view, getContext(), "Please select one of the 2 search criteria", R.color.lightBlue);
+                    .display(view, getContext(), "Please select one of the 2 search criteria", R.color.colorAccent);
             return;
         }
 
@@ -177,20 +177,20 @@ public class MainActivityFindGroupFragment extends Fragment {
         if (checkedZip.isChecked()) {
             if (zipcode.getText().length() == 0) {
                 snackBar
-                        .display(view, getContext(), "Please enter a zipcode", R.color.lightBlue);
+                        .display(view, getContext(), "Please enter a zipcode", R.color.colorAccent);
                 return;
             }
             try {
                 Integer.valueOf(zipcode.getText().toString());
                 if (zipcode.getText().length() != 5) {
                     snackBar
-                            .display(view, getContext(), "Please enter a valid zipcode", R.color.lightBlue);
+                            .display(view, getContext(), "Please enter a valid zipcode", R.color.colorAccent);
                     return;
                 }
             }
             catch (Exception e) {
                 snackBar
-                        .display(view, getContext(), "Please enter a valid zipcode", R.color.lightBlue);
+                        .display(view, getContext(), "Please enter a valid zipcode", R.color.colorAccent);
                 return;
             }
 
@@ -202,7 +202,7 @@ public class MainActivityFindGroupFragment extends Fragment {
             getCurrentLocation();
             if (locationZip == null) {
                 snackBar
-                        .display(view, getContext(), "No location access", R.color.lightBlue);
+                        .display(view, getContext(), "No location access", R.color.colorAccent);
                 return;
             }
             query = dbStudyGroup
@@ -224,7 +224,7 @@ public class MainActivityFindGroupFragment extends Fragment {
                             }
                             if (groups.size() == 0){
                                 snackBar
-                                        .display(view, getContext(), "No matching groups found", R.color.lightBlue);
+                                        .display(view, getContext(), "No matching groups found", R.color.colorAccent);
                             }
                             createRecyclerView();
 
