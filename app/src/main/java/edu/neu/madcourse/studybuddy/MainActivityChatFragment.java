@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -75,17 +76,12 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
         String m = n.substring(0, n.indexOf("@studybuddy.com"));
         userName = m;
         database = FirebaseFirestore.getInstance();
-        query = database.collection("messages").orderBy("messageTime");
-        query.addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
-                    pgBar.setVisibility(View.GONE);
-                }
-            }
-        });
+
+        CollectionReference productsRef = database.collection("messages");
+        query = productsRef.whereEqualTo("gId", gId).orderBy("messageTime");
         adapter = new MessageAdapter(query, userId, MainActivityChatFragment.this);
         recyclerView.setAdapter(adapter);
+
     }
 
     @Override
@@ -96,6 +92,7 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
                 return;
             }
             database.collection("messages").add(new Message(userName, message, userId, gId));
+
             input.setText("");
         }
     }
