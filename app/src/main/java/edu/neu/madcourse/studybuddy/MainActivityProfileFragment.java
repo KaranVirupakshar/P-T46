@@ -32,7 +32,6 @@ public class MainActivityProfileFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private TextView userLogo, userName, fullName, profileHeader;
     private Button logOutButton;
-    private Button chatButton;
 
     public MainActivityProfileFragment() {
     }
@@ -65,21 +64,12 @@ public class MainActivityProfileFragment extends Fragment {
         this.fullName = view.findViewById(R.id.fullName);
 
         this.logOutButton = view.findViewById(R.id.logoutButton);
-        this.chatButton = view.findViewById(R.id.logoutButton3);
 
         logOutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 FirebaseAuth.getInstance().signOut();
-                startActivity(intent);
-            }
-        });
-
-        chatButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getActivity(), MainActivityChatFragment.class);
                 startActivity(intent);
             }
         });
