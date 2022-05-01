@@ -9,11 +9,12 @@ public class Message {
     private String gId;
     private long messageTime;
 
-    public Message(String messageUser, String messageText, String messageUserId) {
+    public Message(String messageUser, String messageText, String messageUserId, String gId) {
         this.messageUser = messageUser;
         this.messageText = messageText;
         this.messageTime = new Date().getTime();
         this.messageUserId = messageUserId;
+        this.gId = gId;
     }
 
     public Message(){}

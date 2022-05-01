@@ -1,6 +1,7 @@
 package edu.neu.madcourse.studybuddy.groupArtifacts;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -66,6 +67,9 @@ public class GroupCardViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent (view.getContext(), MainActivityChatFragment.class);
+                Bundle b = new Bundle();
+                b.putString("groupId", groupId);
+                intent.putExtras(b); //Put your id to your next Intent
                 view.getContext().startActivity(intent);
 
             }

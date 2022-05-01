@@ -36,6 +36,7 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
     private ProgressBar pgBar;
     private String userId;
     private String userName;
+    private String gId;
 
 
     @Override
@@ -53,6 +54,14 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
         auth = FirebaseAuth.getInstance();
         user = auth.getCurrentUser();
         Log.i("MainAcivity", " this os onCreate: " + user);
+
+        //this.gId = savedInstanceState.getString("groupId");
+        Bundle b = getIntent().getExtras();
+        this.gId = ""; // or other values
+        if(b != null)
+            this.gId = b.getString("groupId");
+
+        System.out.println("Group Id: " + this.gId);
 
         if(user==null){
             startActivity(new Intent(this, LoginActivity.class));
@@ -86,7 +95,7 @@ public class MainActivityChatFragment extends AppCompatActivity implements View.
             if(TextUtils.isEmpty(message)){
                 return;
             }
-            database.collection("messages").add(new Message(userName, message, userId));
+            database.collection("messages").add(new Message(userName, message, userId, gId));
             input.setText("");
         }
     }
